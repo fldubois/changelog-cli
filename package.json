@@ -1,0 +1,25 @@
+{
+  "name": "changelog-cli",
+  "version": "0.0.0",
+  "description": "Simple command line interface to edit CHANGELOG files according to keepachangelog.com rules",
+  "author": "Florent Dubois <florent.dubois@devaddict.io>",
+  "license": "MIT",
+  "keywords": [
+    "changelog",
+    "cli"
+  ],
+  "homepage": "https://github.com/fldubois/changelog-cli#readme",
+  "bugs": "https://github.com/fldubois/changelog-cli/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fldubois/changelog-cli.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "commander": "^2.9.0",
+    "shelljs": "^0.6.0"
+  }
+}
