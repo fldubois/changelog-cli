@@ -8,9 +8,22 @@
 
 > Create a new change log file with a standard template
 
+##### Options
+
+| Short | Long     | Default        | Description             |
+| ----- | -------- | -------------- | ----------------------- |
+| `-f`  | `--file` | `CHANGELOG.md` | The change log filename |
+
 ### show
 
 > Show the change list of a specific release
+
+##### Options
+
+| Short | Long        | Default        | Description             |
+| ----- | ----------- | -------------- | ----------------------- |
+| `-f`  | `--file`    | `CHANGELOG.md` | The change log filename |
+| `-r`  | `--release` | `Unreleased`   | Release version to show |
 
 ## License
 
