@@ -25,6 +25,16 @@
 | `-f`  | `--file`    | `CHANGELOG.md` | The change log filename |
 | `-r`  | `--release` | `Unreleased`   | Release version to show |
 
+### release
+
+> Set all current changes under a new version
+
+##### Options
+
+| Short | Long     | Default        | Description             |
+| ----- | -------- | -------------- | ----------------------- |
+| `-f`  | `--file` | `CHANGELOG.md` | The change log filename |
+
 ## License
 
 See [License](LICENSE)
