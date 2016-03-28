@@ -24,6 +24,7 @@
 | ----- | ----------- | -------------- | ----------------------- |
 | `-f`  | `--file`    | `CHANGELOG.md` | The change log filename |
 | `-r`  | `--release` | `Unreleased`   | Release version to show |
+| `-s`  | `--section` | `all`          | Changes section to show |
 
 ### release
 
