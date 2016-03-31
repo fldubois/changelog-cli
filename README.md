@@ -8,6 +8,12 @@
 
 > Create a new change log file with a standard template
 
+#### Usage
+
+```
+$ chlg init [options]
+```
+
 ##### Options
 
 | Short | Long     | Default        | Description             |
@@ -17,6 +23,12 @@
 ### show
 
 > Show the change list of a specific release
+
+#### Usage
+
+```
+$ chlg show [options] <release>
+```
 
 ##### Options
 
@@ -39,6 +51,12 @@
 ### add
 
 > Add a new feature in current changes
+
+#### Usage
+
+```
+$ chlg add [options] <message>
+```
 
 ##### Options
 
