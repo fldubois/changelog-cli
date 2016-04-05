@@ -48,6 +48,22 @@ $ chlg show [options] <release>
 | ----- | -------- | -------------- | ----------------------- |
 | `-f`  | `--file` | `CHANGELOG.md` | The change log filename |
 
+### insert
+
+> Insert a new change in the log file
+
+#### Usage
+
+```
+$ chlg insert [options] <section> <message>
+```
+
+##### Options
+
+| Short | Long     | Default        | Description             |
+| ----- | -------- | -------------- | ----------------------- |
+| `-f`  | `--file` | `CHANGELOG.md` | The change log filename |
+
 ### add
 
 > Add a new feature in current changes
