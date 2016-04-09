@@ -80,6 +80,22 @@ $ chlg add [options] <message>
 | ----- | -------- | -------------- | ----------------------- |
 | `-f`  | `--file` | `CHANGELOG.md` | The change log filename |
 
+### change
+
+> Point out a change in an existing functionality
+
+#### Usage
+
+```
+$ chlg change [options] <message>
+```
+
+##### Options
+
+| Short | Long     | Default        | Description             |
+| ----- | -------- | -------------- | ----------------------- |
+| `-f`  | `--file` | `CHANGELOG.md` | The change log filename |
+
 ## License
 
 See [License](LICENSE)
