@@ -112,6 +112,22 @@ $ chlg deprecate [options] <message>
 | ----- | -------- | -------------- | ----------------------- |
 | `-f`  | `--file` | `CHANGELOG.md` | The change log filename |
 
+### remove
+
+> Point out a feature deleted in the upcoming release
+
+#### Usage
+
+```
+$ chlg remove [options] <message>
+```
+
+##### Options
+
+| Short | Long     | Default        | Description             |
+| ----- | -------- | -------------- | ----------------------- |
+| `-f`  | `--file` | `CHANGELOG.md` | The change log filename |
+
 ## License
 
 See [License](LICENSE)
