@@ -128,6 +128,22 @@ $ chlg remove [options] <message>
 | ----- | -------- | -------------- | ----------------------- |
 | `-f`  | `--file` | `CHANGELOG.md` | The change log filename |
 
+### fix
+
+> Add a bug fix to changes list
+
+#### Usage
+
+```
+$ chlg fix [options] <message>
+```
+
+##### Options
+
+| Short | Long     | Default        | Description             |
+| ----- | -------- | -------------- | ----------------------- |
+| `-f`  | `--file` | `CHANGELOG.md` | The change log filename |
+
 ## License
 
 See [License](LICENSE)
