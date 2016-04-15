@@ -144,6 +144,22 @@ $ chlg fix [options] <message>
 | ----- | -------- | -------------- | ----------------------- |
 | `-f`  | `--file` | `CHANGELOG.md` | The change log filename |
 
+### security
+
+> Invite users to upgrade in case of vulnerabilities
+
+#### Usage
+
+```
+$ chlg security [options] <message>
+```
+
+##### Options
+
+| Short | Long     | Default        | Description             |
+| ----- | -------- | -------------- | ----------------------- |
+| `-f`  | `--file` | `CHANGELOG.md` | The change log filename |
+
 ## License
 
 See [License](LICENSE)
