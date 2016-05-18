@@ -6,7 +6,9 @@ var spawnSync = require('child_process').spawnSync;
 
 var expect = require('chai').expect;
 
-var chlgInit = require('../lib/chlg-init');
+var chlgInit = require('../../lib/chlg-init');
+
+var dataDir = path.resolve(__dirname, '../data');
 
 function checkChangelog(filename, done) {
   fs.readFile(filename, {encoding: 'utf8'}, function (err, content) {
@@ -28,7 +30,7 @@ function checkChangelog(filename, done) {
 describe('chlg-init', function () {
 
   before('Change CWD to test/data directory', function (done) {
-    fs.stat(__dirname + '/data', function (err, stats) {
+    fs.stat(dataDir, function (err, stats) {
       if (err) {
         return done(err);
       }
@@ -37,14 +39,14 @@ describe('chlg-init', function () {
         return done(new Error('test/data is not a directory'));
       }
 
-      process.chdir(__dirname + '/data');
+      process.chdir(dataDir);
 
       return done();
     });
   });
 
   before('Delete files in /test/data directory', function (done) {
-    fs.readdir(__dirname + '/data', function (err, files) {
+    fs.readdir(dataDir, function (err, files) {
       if (err) {
         return done(err);
       }
@@ -84,7 +86,7 @@ describe('chlg-init', function () {
   describe('as a command', function () {
 
     it('should create a new changelog file with default name', function (done) {
-      var child = spawnSync(process.execPath, [path.resolve(__dirname, '../lib/chlg-init.js')], {timeout: 1500});
+      var child = spawnSync(process.execPath, [path.resolve(__dirname, '../../lib/chlg-init.js')], {timeout: 1500});
 
       expect(child.status).to.equal(0);
       expect(child.stdout.toString()).to.equal('');
@@ -93,7 +95,7 @@ describe('chlg-init', function () {
     });
 
     it('should create a new changelog file with custom name', function (done) {
-      var child = spawnSync(process.execPath, [path.resolve(__dirname, '../lib/chlg-init.js'), '-f', 'CHANGELOG-custom.md'], {timeout: 1500});
+      var child = spawnSync(process.execPath, [path.resolve(__dirname, '../../lib/chlg-init.js'), '-f', 'CHANGELOG-custom.md'], {timeout: 1500});
 
       expect(child.status).to.equal(0);
       expect(child.stdout.toString()).to.equal('');
@@ -102,7 +104,7 @@ describe('chlg-init', function () {
     });
 
     it('should exit with error status on existing file', function (done) {
-      var child = spawnSync(process.execPath, [path.resolve(__dirname, '../lib/chlg-init.js')], {timeout: 1500});
+      var child = spawnSync(process.execPath, [path.resolve(__dirname, '../../lib/chlg-init.js')], {timeout: 1500});
 
       expect(child.status).to.equal(1);
       expect(child.stdout.toString()).to.equal('');
@@ -114,7 +116,7 @@ describe('chlg-init', function () {
   });
 
   after('Delete files in /test/data directory', function (done) {
-    fs.readdir(__dirname + '/data', function (err, files) {
+    fs.readdir(dataDir, function (err, files) {
       if (err) {
         return done(err);
       }

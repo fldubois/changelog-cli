@@ -2,7 +2,7 @@
 
 var expect = require('chai').expect;
 
-var sections = require('../../lib/common/sections');
+var sections = require('../../../lib/common/sections');
 
 describe('common/sections', function() {
 

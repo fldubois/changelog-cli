@@ -17,7 +17,7 @@
   "main": "lib/chlg.js",
   "scripts": {
     "lint": "eslint lib",
-    "test": "mocha test --recursive"
+    "test": "mocha test/specs --recursive"
   },
   "dependencies": {
     "chalk": "^1.1.3",

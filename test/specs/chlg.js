@@ -5,7 +5,7 @@ var spawnSync = require('child_process').spawnSync;
 
 var expect = require('chai').expect;
 
-var chlg = require('../lib/chlg');
+var chlg = require('../../lib/chlg');
 
 var commands = [
   'init',
@@ -35,14 +35,14 @@ describe('chlg', function() {
   describe('as a command', function() {
 
     it('should show the chlg version', function () {
-      var child = spawnSync(process.execPath, [path.resolve(__dirname, '../lib/chlg.js'), 'version'], {timeout: 1500});
+      var child = spawnSync(process.execPath, [path.resolve(__dirname, '../../lib/chlg.js'), 'version'], {timeout: 1500});
 
       expect(child.status).to.equal(0);
-      expect(child.stdout.toString().replace('\n', '')).to.equal(require('../package.json').version);
+      expect(child.stdout.toString().replace('\n', '')).to.equal(require('../../package.json').version);
     });
 
     it('should show the help message', function () {
-      var child = spawnSync(process.execPath, [path.resolve(__dirname, '../lib/chlg.js'), 'help'], {timeout: 1500});
+      var child = spawnSync(process.execPath, [path.resolve(__dirname, '../../lib/chlg.js'), 'help'], {timeout: 1500});
 
       expect(child.status).to.equal(0);
       expect(child.stdout.toString()).to.have.string('Usage: chlg [options] [command]');
@@ -50,7 +50,7 @@ describe('chlg', function() {
 
     commands.forEach(function (command) {
       it('should support the command ' + command, function () {
-        var child = spawnSync(process.execPath, [path.resolve(__dirname, '../lib/chlg.js'), 'help', command], {timeout: 1500});
+        var child = spawnSync(process.execPath, [path.resolve(__dirname, '../../lib/chlg.js'), 'help', command], {timeout: 1500});
 
         expect(child.status).to.equal(0);
         expect(child.stdout.toString()).to.have.string('Usage: chlg-' + command);
