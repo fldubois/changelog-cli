@@ -1,31 +1,15 @@
 'use strict';
 
-var fs = require('fs');
-var path  = require('path');
+var expect    = require('chai').expect;
+var fs        = require('fs');
+var path      = require('path');
 var spawnSync = require('child_process').spawnSync;
 
-var expect = require('chai').expect;
-
-var chlgInit = require('../../lib/chlg-init');
+var chlgInit    = require('../../lib/chlg-init');
+var fileCompare = require('../helpers/file-compare');
 
 var dataDir = path.resolve(__dirname, '../data');
-
-function checkChangelog(filename, done) {
-  fs.readFile(filename, {encoding: 'utf8'}, function (err, content) {
-    expect(err).to.not.exist;
-
-    expect(content).to.equal([
-      '# Change Log',
-      'All notable changes to this project will be documented in this file.',
-      'This project adheres to [Semantic Versioning](http://semver.org/).',
-      '',
-      '## [Unreleased][unreleased]',
-      ''
-    ].join('\n'));
-
-    return done();
-  });
-}
+var fixture = path.resolve(__dirname, '../fixtures/CHANGELOG-init.md');
 
 describe('chlg-init', function () {
 
@@ -68,7 +52,12 @@ describe('chlg-init', function () {
     it('should create a new changelog file', function (done) {
       chlgInit(filename, function (err) {
         expect(err).to.not.exist;
-        checkChangelog(filename, done);
+
+        fileCompare(filename, fixture, function (err, match) {
+          expect(err).to.not.exist;
+          expect(match).to.equal(true);
+          return done();
+        });
       });
     });
 
@@ -91,7 +80,13 @@ describe('chlg-init', function () {
       expect(child.status).to.equal(0);
       expect(child.stdout.toString()).to.equal('');
       expect(child.stderr.toString()).to.equal('');
-      checkChangelog('CHANGELOG.md', done);
+
+      fileCompare('CHANGELOG.md', fixture, function (err, match) {
+        expect(err).to.not.exist;
+        expect(match).to.equal(true);
+        done();
+      });
+
     });
 
     it('should create a new changelog file with custom name', function (done) {
@@ -100,7 +95,12 @@ describe('chlg-init', function () {
       expect(child.status).to.equal(0);
       expect(child.stdout.toString()).to.equal('');
       expect(child.stderr.toString()).to.equal('');
-      checkChangelog('CHANGELOG-custom.md', done);
+
+      fileCompare('CHANGELOG-custom.md', fixture, function (err, match) {
+        expect(err).to.not.exist;
+        expect(match).to.equal(true);
+        done();
+      });
     });
 
     it('should exit with error status on existing file', function (done) {
