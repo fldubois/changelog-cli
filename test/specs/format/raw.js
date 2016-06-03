@@ -13,7 +13,7 @@ describe('format/raw', function() {
   });
 
   it('should format release line', function () {
-    expect(raw.release('0.0.0', '1970-01-01')).to.equal('## [0.0.0][1970-01-01]');
+    expect(raw.release('0.0.0', new Date('1970-01-01'))).to.equal('## [0.0.0][1970-01-01]');
     expect(raw.release('Unreleased', 'unreleased')).to.equal('## [Unreleased][unreleased]');
   });
 

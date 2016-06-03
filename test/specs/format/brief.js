@@ -13,7 +13,7 @@ describe('format/brief', function() {
   });
 
   it('should format release line', function () {
-    expect(brief.release('0.0.0', '1970-01-01')).to.equal('v0.0.0 - 1970-01-01');
+    expect(brief.release('0.0.0', new Date('1970-01-01'))).to.equal('v0.0.0 - 1970-01-01');
     expect(brief.release('Unreleased', 'unreleased')).to.equal('Unreleased');
   });
 
