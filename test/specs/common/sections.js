@@ -48,6 +48,32 @@ describe('common/sections', function() {
 
   });
 
+  describe('clean', function () {
+
+    it('should return formatted name for valid section names', function () {
+      expect(sections.clean('ADDED')).to.equal('Added');
+      expect(sections.clean('added')).to.equal('Added');
+      expect(sections.clean('Added')).to.equal('Added');
+      expect(sections.clean('AdDeD')).to.equal('Added');
+      expect(sections.clean('aDdEd')).to.equal('Added');
+      expect(sections.clean('addeD')).to.equal('Added');
+    });
+
+    it('should return null for bad section names', function () {
+      expect(sections.clean(true)).to.equal(null);
+      expect(sections.clean(false)).to.equal(null);
+      expect(sections.clean(NaN)).to.equal(null);
+      expect(sections.clean(0)).to.equal(null);
+      expect(sections.clean(-1)).to.equal(null);
+      expect(sections.clean(null)).to.equal(null);
+      expect(sections.clean(undefined)).to.equal(null);
+      expect(sections.clean('')).to.equal(null);
+      expect(sections.clean('Hello')).to.equal(null);
+      expect(sections.clean('ADDEDD')).to.equal(null);
+    });
+
+  });
+
   describe('after', function () {
 
     var scenarios = {
