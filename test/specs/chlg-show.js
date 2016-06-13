@@ -286,13 +286,132 @@ describe('chlg-show', function () {
     });
   });
 
+  it('should filter releases with "from" option', function (done) {
+    chlgShow({
+      file:     fixture.valid,
+      releases: ['all'],
+      from:     '2000-01-01'
+    }, function (error, logs) {
+      expect(error).to.not.exist;
+
+      expect(logs).to.deep.equal({
+        'Unreleased': {
+          date: null,
+          sections: {
+            'Added': [
+              'Add feature 6',
+              'Add feature 7',
+              'Add feature 8'
+            ],
+            'Changed': [
+              'Change feature 5'
+            ],
+            'Deprecated': [
+              'Deprecate feature 1'
+            ],
+            'Removed': [
+              'Remove feature 2'
+            ],
+            'Fixed': [
+              'Fix feature 3',
+              'Fix feature 4'
+            ]
+          }
+        },
+        '0.0.2': {
+          date: new Date('2012-12-21'),
+          sections: {
+            'Added': [
+              'Add feature 4',
+              'Add feature 5'
+            ],
+            'Changed': [
+              'Change feature 2'
+            ],
+
+            'Fixed': [
+              'Fix feature 3'
+            ],
+
+            'Security': [
+              'Feature 1'
+            ]
+          }
+        }
+      });
+
+      done();
+    });
+  });
+
+  it('should filter releases with "to" option', function (done) {
+    chlgShow({
+      file:     fixture.valid,
+      releases: ['all'],
+      to:       '2000-01-01'
+    }, function (error, logs) {
+      expect(error).to.not.exist;
+
+      expect(logs).to.deep.equal({
+        '0.0.1': {
+          date: new Date('1970-01-01'),
+          sections: {
+            'Added': [
+              'Add feature 1',
+              'Add feature 2',
+              'Add feature 3'
+            ]
+          }
+        }
+      });
+
+      done();
+    });
+  });
+
+  it('should filter releases with "from" and "to" option', function (done) {
+    chlgShow({
+      file:     fixture.valid,
+      releases: ['all'],
+      from:     '2000-01-01',
+      to:       '2014-01-01'
+    }, function (error, logs) {
+      expect(error).to.not.exist;
+
+      expect(logs).to.deep.equal({
+        '0.0.2': {
+          date: new Date('2012-12-21'),
+          sections: {
+            'Added': [
+              'Add feature 4',
+              'Add feature 5'
+            ],
+            'Changed': [
+              'Change feature 2'
+            ],
+
+            'Fixed': [
+              'Fix feature 3'
+            ],
+
+            'Security': [
+              'Feature 1'
+            ]
+          }
+        }
+      });
+
+      done();
+    });
+  });
+
   it('should return an error on bad release number', function (done) {
     chlgShow({
       file: fixture.valid,
       releases: ['Not a release']
     }, function (error, logs) {
       expect(error).to.be.an('error');
-      expect(error.message).to.equal('‘Not a release’ is not valid semver version');
+      expect(error.message).to.equal('‘Not a release’ is not valid semver version/range');
       expect(logs).to.be.undefined;
       done();
     });
@@ -329,6 +448,30 @@ describe('chlg-show', function () {
     }, function (error, logs) {
       expect(error).to.be.an('error');
       expect(error.message).to.equal('no matching release found');
+      expect(logs).to.be.undefined;
+      done();
+    });
+  });
+
+  it('should return an error for bad format on "from" parameter', function (done) {
+    chlgShow({
+      file: fixture.valid,
+      from: 'Not a date'
+    }, function (error, logs) {
+      expect(error).to.be.an('error');
+      expect(error.message).to.equal('Date format must be YYYY-MM-DD');
+      expect(logs).to.be.undefined;
+      done();
+    });
+  });
+
+  it('should return an error for bad format on "to" parameter', function (done) {
+    chlgShow({
+      file: fixture.valid,
+      to:   'Not a date'
+    }, function (error, logs) {
+      expect(error).to.be.an('error');
+      expect(error.message).to.equal('Date format must be YYYY-MM-DD');
       expect(logs).to.be.undefined;
       done();
     });

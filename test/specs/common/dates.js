@@ -82,4 +82,30 @@ describe('common/dates', function() {
 
   });
 
+  describe('isBetween', function () {
+    var from = new Date('2000-01-01');
+    var to   = new Date('2010-01-01');
+
+    it('should return true for dates in period', function () {
+      expect(dates.isBetween(new Date('2005-01-01'), from, to)).to.equal(true);
+      expect(dates.isBetween(new Date('2000-01-01'), from, to)).to.equal(true);
+      expect(dates.isBetween(new Date('2010-01-01'), from, to)).to.equal(true);
+    });
+
+    it('should return true for null `date` and `to` parameters', function () {
+      expect(dates.isBetween(null, from, null)).to.equal(true);
+    });
+
+    it('should return false for dates before period', function () {
+      expect(dates.isBetween(new Date('1999-12-31'), from, to)).to.equal(false);
+      expect(dates.isBetween(new Date('1970-01-01'), from, to)).to.equal(false);
+    });
+
+    it('should return false for dates after period', function () {
+      expect(dates.isBetween(new Date('2015-01-01'), from, to)).to.equal(false);
+      expect(dates.isBetween(new Date('2010-01-02'), from, to)).to.equal(false);
+    });
+
+  });
+
 });
