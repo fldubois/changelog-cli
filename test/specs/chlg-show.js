@@ -8,12 +8,40 @@ var spawnSync = require('child_process').spawnSync;
 var chlgShow = require('../../lib/chlg-show');
 
 var dataDir = path.resolve(__dirname, '../data');
-var fixture = {
+var fixtures = {
   valid: path.resolve(__dirname, '../fixtures/CHANGELOG-show.md'),
-  empty: path.resolve(__dirname, '../fixtures/CHANGELOG-init.md')
+  empty: path.resolve(__dirname, '../fixtures/CHANGELOG-init.md'),
+  logs:  require('../fixtures/logs.js')
 };
 
 var cwd = '';
+
+function filter(logs, releases, sections) {
+  var filtered = {};
+
+  Object.keys(logs).forEach(function (release) {
+    if (releases.indexOf(release) !== -1) {
+      if (!sections) {
+        filtered[release] = logs[release];
+      } else {
+        var filteredSections = {};
+
+        Object.keys(logs[release].sections).forEach(function (section) {
+          if (sections.indexOf(section) !== -1) {
+            filteredSections[section] = logs[release].sections[section];
+          }
+        });
+
+        filtered[release] = {
+          date:     logs[release].date,
+          sections: filteredSections
+        };
+      }
+    }
+  });
+
+  return filtered;
+}
 
 describe('chlg-show', function () {
 
@@ -35,35 +63,9 @@ describe('chlg-show', function () {
   });
 
   it('should read logs from changelog file', function (done) {
-    chlgShow({file: fixture.valid}, function (error, logs) {
+    chlgShow({file: fixtures.valid}, function (error, logs) {
       expect(error).to.not.exist;
-
-      expect(logs).to.deep.equal({
-        'Unreleased': {
-          date: null,
-          sections: {
-            'Added': [
-              'Add feature 6',
-              'Add feature 7',
-              'Add feature 8'
-            ],
-            'Changed': [
-              'Change feature 5'
-            ],
-            'Deprecated': [
-              'Deprecate feature 1'
-            ],
-            'Removed': [
-              'Remove feature 2'
-            ],
-            'Fixed': [
-              'Fix feature 3',
-              'Fix feature 4'
-            ]
-          }
-        }
-      });
-
+      expect(logs).to.deep.equal(filter(fixtures.logs, ['Unreleased']));
       done();
     });
   });
@@ -79,335 +81,99 @@ describe('chlg-show', function () {
 
   it('should filter sections', function (done) {
     chlgShow({
-      file: fixture.valid,
+      file: fixtures.valid,
       sections: ['Added', 'deprecated', 'FIXED']
     }, function (error, logs) {
       expect(error).to.not.exist;
-
-      expect(logs).to.deep.equal({
-        'Unreleased': {
-          date: null,
-          sections: {
-            'Added': [
-              'Add feature 6',
-              'Add feature 7',
-              'Add feature 8'
-            ],
-            'Deprecated': [
-              'Deprecate feature 1'
-            ],
-            'Fixed': [
-              'Fix feature 3',
-              'Fix feature 4'
-            ]
-          }
-        }
-      });
-
+      expect(logs).to.deep.equal(filter(fixtures.logs, ['Unreleased'], ['Added', 'Deprecated', 'Fixed']));
       done();
     });
   });
 
   it('should filter releases', function (done) {
     chlgShow({
-      file: fixture.valid,
+      file: fixtures.valid,
       releases: ['0.0.2']
     }, function (error, logs) {
       expect(error).to.not.exist;
-
-      expect(logs).to.deep.equal({
-        '0.0.2': {
-          date: new Date('2012-12-21'),
-          sections: {
-            'Added': [
-              'Add feature 4',
-              'Add feature 5'
-            ],
-            'Changed': [
-              'Change feature 2'
-            ],
-
-            'Fixed': [
-              'Fix feature 3'
-            ],
-
-            'Security': [
-              'Feature 1'
-            ]
-          }
-        }
-      });
-
+      expect(logs).to.deep.equal(filter(fixtures.logs, ['0.0.2']));
       done();
     });
   });
 
   it('should filter releases by range', function (done) {
     chlgShow({
-      file: fixture.valid,
+      file: fixtures.valid,
       releases: ['0.0.x']
     }, function (error, logs) {
       expect(error).to.not.exist;
-
-      expect(logs).to.deep.equal({
-        '0.0.2': {
-          date: new Date('2012-12-21'),
-          sections: {
-            'Added': [
-              'Add feature 4',
-              'Add feature 5'
-            ],
-            'Changed': [
-              'Change feature 2'
-            ],
-
-            'Fixed': [
-              'Fix feature 3'
-            ],
-
-            'Security': [
-              'Feature 1'
-            ]
-          }
-        },
-        '0.0.1': {
-          date: new Date('1970-01-01'),
-          sections: {
-            'Added': [
-              'Add feature 1',
-              'Add feature 2',
-              'Add feature 3'
-            ]
-          }
-        }
-      });
-
+      expect(logs).to.deep.equal(filter(fixtures.logs, ['0.0.1', '0.0.2']));
       done();
     });
   });
 
   it('should accept "all" as release option', function (done) {
     chlgShow({
-      file: fixture.valid,
+      file: fixtures.valid,
       releases: ['all']
     }, function (error, logs) {
       expect(error).to.not.exist;
-
-      expect(logs).to.deep.equal({
-        'Unreleased': {
-          date: null,
-          sections: {
-            'Added': [
-              'Add feature 6',
-              'Add feature 7',
-              'Add feature 8'
-            ],
-            'Changed': [
-              'Change feature 5'
-            ],
-            'Deprecated': [
-              'Deprecate feature 1'
-            ],
-            'Removed': [
-              'Remove feature 2'
-            ],
-            'Fixed': [
-              'Fix feature 3',
-              'Fix feature 4'
-            ]
-          }
-        },
-        '0.0.2': {
-          date: new Date('2012-12-21'),
-          sections: {
-            'Added': [
-              'Add feature 4',
-              'Add feature 5'
-            ],
-            'Changed': [
-              'Change feature 2'
-            ],
-            'Fixed': [
-              'Fix feature 3'
-            ],
-
-            'Security': [
-              'Feature 1'
-            ]
-          }
-        },
-        '0.0.1': {
-          date: new Date('1970-01-01'),
-          sections: {
-            'Added': [
-              'Add feature 1',
-              'Add feature 2',
-              'Add feature 3'
-            ]
-          }
-        }
-      });
-
+      expect(logs).to.deep.equal(fixtures.logs);
       done();
     });
   });
 
   it('should accept "latest" as release option', function (done) {
     chlgShow({
-      file: fixture.valid,
+      file: fixtures.valid,
       releases: ['latest']
     }, function (error, logs) {
       expect(error).to.not.exist;
-
-      expect(logs).to.deep.equal({
-        '0.0.2': {
-          date: new Date('2012-12-21'),
-          sections: {
-            'Added': [
-              'Add feature 4',
-              'Add feature 5'
-            ],
-            'Changed': [
-              'Change feature 2'
-            ],
-
-            'Fixed': [
-              'Fix feature 3'
-            ],
-
-            'Security': [
-              'Feature 1'
-            ]
-          }
-        }
-      });
-
+      expect(logs).to.deep.equal(filter(fixtures.logs, ['0.0.2']));
       done();
     });
   });
 
   it('should filter releases with "from" option', function (done) {
     chlgShow({
-      file:     fixture.valid,
+      file:     fixtures.valid,
       releases: ['all'],
       from:     '2000-01-01'
     }, function (error, logs) {
       expect(error).to.not.exist;
-
-      expect(logs).to.deep.equal({
-        'Unreleased': {
-          date: null,
-          sections: {
-            'Added': [
-              'Add feature 6',
-              'Add feature 7',
-              'Add feature 8'
-            ],
-            'Changed': [
-              'Change feature 5'
-            ],
-            'Deprecated': [
-              'Deprecate feature 1'
-            ],
-            'Removed': [
-              'Remove feature 2'
-            ],
-            'Fixed': [
-              'Fix feature 3',
-              'Fix feature 4'
-            ]
-          }
-        },
-        '0.0.2': {
-          date: new Date('2012-12-21'),
-          sections: {
-            'Added': [
-              'Add feature 4',
-              'Add feature 5'
-            ],
-            'Changed': [
-              'Change feature 2'
-            ],
-
-            'Fixed': [
-              'Fix feature 3'
-            ],
-
-            'Security': [
-              'Feature 1'
-            ]
-          }
-        }
-      });
-
+      expect(logs).to.deep.equal(filter(fixtures.logs, ['Unreleased', '0.0.2']));
       done();
     });
   });
 
   it('should filter releases with "to" option', function (done) {
     chlgShow({
-      file:     fixture.valid,
+      file:     fixtures.valid,
       releases: ['all'],
       to:       '2000-01-01'
     }, function (error, logs) {
       expect(error).to.not.exist;
-
-      expect(logs).to.deep.equal({
-        '0.0.1': {
-          date: new Date('1970-01-01'),
-          sections: {
-            'Added': [
-              'Add feature 1',
-              'Add feature 2',
-              'Add feature 3'
-            ]
-          }
-        }
-      });
-
+      expect(logs).to.deep.equal(filter(fixtures.logs, ['0.0.1']));
       done();
     });
   });
 
   it('should filter releases with "from" and "to" option', function (done) {
     chlgShow({
-      file:     fixture.valid,
+      file:     fixtures.valid,
       releases: ['all'],
       from:     '2000-01-01',
       to:       '2014-01-01'
     }, function (error, logs) {
       expect(error).to.not.exist;
-
-      expect(logs).to.deep.equal({
-        '0.0.2': {
-          date: new Date('2012-12-21'),
-          sections: {
-            'Added': [
-              'Add feature 4',
-              'Add feature 5'
-            ],
-            'Changed': [
-              'Change feature 2'
-            ],
-
-            'Fixed': [
-              'Fix feature 3'
-            ],
-
-            'Security': [
-              'Feature 1'
-            ]
-          }
-        }
-      });
-
+      expect(logs).to.deep.equal(filter(fixtures.logs, ['0.0.2']));
       done();
     });
   });
 
   it('should return an error on bad release number', function (done) {
     chlgShow({
-      file: fixture.valid,
+      file: fixtures.valid,
       releases: ['Not a release']
     }, function (error, logs) {
       expect(error).to.be.an('error');
@@ -419,7 +185,7 @@ describe('chlg-show', function () {
 
   it('should return an error on bad section name', function (done) {
     chlgShow({
-      file: fixture.valid,
+      file: fixtures.valid,
       sections: ['Bad']
     }, function (error, logs) {
       expect(error).to.be.an('error');
@@ -431,7 +197,7 @@ describe('chlg-show', function () {
 
   it('should return an error with no matching release found', function (done) {
     chlgShow({
-      file: fixture.empty,
+      file: fixtures.empty,
       releases: ['0.0.1']
     }, function (error, logs) {
       expect(error).to.be.an('error');
@@ -443,7 +209,7 @@ describe('chlg-show', function () {
 
   it('should return an error for "latest" with no releases in changelog', function (done) {
     chlgShow({
-      file: fixture.empty,
+      file: fixtures.empty,
       releases: ['latest']
     }, function (error, logs) {
       expect(error).to.be.an('error');
@@ -455,7 +221,7 @@ describe('chlg-show', function () {
 
   it('should return an error for bad format on "from" parameter', function (done) {
     chlgShow({
-      file: fixture.valid,
+      file: fixtures.valid,
       from: 'Not a date'
     }, function (error, logs) {
       expect(error).to.be.an('error');
@@ -467,7 +233,7 @@ describe('chlg-show', function () {
 
   it('should return an error for bad format on "to" parameter', function (done) {
     chlgShow({
-      file: fixture.valid,
+      file: fixtures.valid,
       to:   'Not a date'
     }, function (error, logs) {
       expect(error).to.be.an('error');
