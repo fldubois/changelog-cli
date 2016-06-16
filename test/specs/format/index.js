@@ -59,7 +59,7 @@ describe('format', function() {
   it('should return error on unknown format', function (done) {
     format('false', fixture, function (error, lines) {
       expect(error).to.be.an.instanceof(Error);
-      expect(error.message).to.equal('unknown format \'false\'');
+      expect(error.message).to.equal('Unknown format: ‘false’');
       expect(lines).to.not.exists;
       done();
     });

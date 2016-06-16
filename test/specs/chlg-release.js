@@ -127,7 +127,7 @@ describe('chlg-release', function () {
   it('should return an error for invalid semver versions', function (done) {
     chlgRelease('Not a semver version', function (error) {
       expect(error).to.be.an('error');
-      expect(error.message).to.equal('Not a semver version is not valid semver version');
+      expect(error.message).to.equal('‘Not a semver version’ is not valid semver version');
       done();
     });
   });
@@ -143,7 +143,7 @@ describe('chlg-release', function () {
   it('should return an error for invalid date format', function (done) {
     chlgRelease('1.0.0', {date: '1970-13-32'}, function (error) {
       expect(error).to.be.an('error');
-      expect(error.message).to.equal('invalid date: 1970-13-32');
+      expect(error.message).to.equal('Invalid date: 1970-13-32');
       done();
     });
   });
@@ -151,7 +151,7 @@ describe('chlg-release', function () {
   it('should return an error for lower releases than latest', function (done) {
     chlgRelease('0.0.1', function (error) {
       expect(error).to.be.an('error');
-      expect(error.message).to.equal('last release (0.0.2) is greater than 0.0.1');
+      expect(error.message).to.equal('Last release (0.0.2) is greater than 0.0.1');
       done();
     });
   });
@@ -159,7 +159,7 @@ describe('chlg-release', function () {
   it('should return an error for dates prior to the latest', function (done) {
     chlgRelease('1.0.0', {date: '1970-01-01'}, function (error) {
       expect(error).to.be.an('error');
-      expect(error.message).to.equal('the release date is prior to the last (2012-12-21)');
+      expect(error.message).to.equal('The release date is prior to the last (2012-12-21)');
       done();
     });
   });

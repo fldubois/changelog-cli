@@ -201,7 +201,7 @@ describe('chlg-show', function () {
       releases: ['0.0.1']
     }, function (error, logs) {
       expect(error).to.be.an('error');
-      expect(error.message).to.equal('no matching release found');
+      expect(error.message).to.equal('No matching release found');
       expect(logs).to.be.undefined;
       done();
     });
@@ -213,7 +213,7 @@ describe('chlg-show', function () {
       releases: ['latest']
     }, function (error, logs) {
       expect(error).to.be.an('error');
-      expect(error.message).to.equal('no matching release found');
+      expect(error.message).to.equal('No matching release found');
       expect(logs).to.be.undefined;
       done();
     });

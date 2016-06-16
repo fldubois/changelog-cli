@@ -64,7 +64,7 @@ describe('chlg-init', function () {
     it('should return error on existing file', function (done) {
       chlgInit(filename, function (err) {
         expect(err).to.exist;
-        expect(err.message).to.equal('cannot create file ‘' + filename + '’: File exists');
+        expect(err.message).to.equal('Cannot create file ‘' + filename + '’: File exists');
 
         return done();
       });
@@ -108,7 +108,7 @@ describe('chlg-init', function () {
 
       expect(child.status).to.equal(1);
       expect(child.stdout.toString()).to.equal('');
-      expect(child.stderr.toString()).to.equal('chlg-init: cannot create file ‘CHANGELOG.md’: File exists\n');
+      expect(child.stderr.toString()).to.equal('chlg-init: Cannot create file ‘CHANGELOG.md’: File exists\n');
 
       return done();
     });
