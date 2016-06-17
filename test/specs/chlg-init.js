@@ -11,6 +11,24 @@ var fileCompare = require('../helpers/file-compare');
 var dataDir = path.resolve(__dirname, '../data');
 var fixture = path.resolve(__dirname, '../fixtures/CHANGELOG-init.md');
 
+var cwd = '';
+
+function cleanDataDirectory(done) {
+  fs.readdir(dataDir, function (err, files) {
+    if (err) {
+      return done(err);
+    }
+
+    files.forEach(function (file) {
+      if (file !== '.gitkeep') {
+        fs.unlinkSync(file);
+      }
+    });
+
+    return done();
+  });
+}
+
 describe('chlg-init', function () {
 
   before('Change CWD to test/data directory', function (done) {
@@ -23,31 +41,17 @@ describe('chlg-init', function () {
         return done(new Error('test/data is not a directory'));
       }
 
+      cwd = process.cwd();
       process.chdir(dataDir);
 
       return done();
     });
   });
 
-  before('Delete files in /test/data directory', function (done) {
-    fs.readdir(dataDir, function (err, files) {
-      if (err) {
-        return done(err);
-      }
-
-      files.forEach(function (file) {
-        if (file !== '.gitkeep') {
-          fs.unlinkSync(file);
-        }
-      });
-
-      return done();
-    })
-  });
-
   describe('as a module', function () {
-
     var filename = 'CHANGELOG-module.md';
+
+    before('Delete files in /test/data directory', cleanDataDirectory);
 
     it('should create a new changelog file', function (done) {
       chlgInit(filename, function (err) {
@@ -70,9 +74,24 @@ describe('chlg-init', function () {
       });
     });
 
+    it('should use \'CHANGELOG.md\' as default filename', function (done) {
+      chlgInit(function (err) {
+        expect(err).to.not.exist;
+
+        fileCompare('CHANGELOG.md', fixture, function (err, match) {
+          expect(err).to.not.exist;
+          expect(match).to.equal(true);
+          return done();
+        });
+      });
+    });
+
+    after('Delete files in /test/data directory', cleanDataDirectory);
+
   });
 
   describe('as a command', function () {
+    before('Delete files in /test/data directory', cleanDataDirectory);
 
     it('should create a new changelog file with default name', function (done) {
       var child = spawnSync(process.execPath, [path.resolve(__dirname, '../../lib/chlg-init.js')], {timeout: 1500});
@@ -113,22 +132,12 @@ describe('chlg-init', function () {
       return done();
     });
 
+    after('Delete files in /test/data directory', cleanDataDirectory);
+
   });
 
-  after('Delete files in /test/data directory', function (done) {
-    fs.readdir(dataDir, function (err, files) {
-      if (err) {
-        return done(err);
-      }
-
-      files.forEach(function (file) {
-        if (file !== '.gitkeep') {
-          fs.unlinkSync(file);
-        }
-      });
-
-      return done();
-    })
+  after('Restore CWD', function () {
+    process.chdir(cwd);
   });
 
 });
