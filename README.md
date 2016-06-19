@@ -32,13 +32,15 @@ $ chlg show [options] <release>
 
 ##### Options
 
-| Short | Long         | Default        | Description             |
-| ----- | ------------ | -------------- | ----------------------- |
-| `-f`  | `--file`     | `CHANGELOG.md` | The change log filename |
-| `-r`  | `--release`  | `Unreleased`   | Release version to show |
-| `-s`  | `--section`  | `all`          | Changes section to show |
-| `-F`  | `--format`   | `raw`          | Ouput format            |
-| `-C`  | `--no-color` |                | Disable ouput colors    |
+| Short | Long         | Default        | Description                     |
+| ----- | ------------ | -------------- | ------------------------------- |
+| `-f`  | `--file`     | `CHANGELOG.md` | The change log filename         |
+| `-r`  | `--release`  | `Unreleased`   | Release version to show         |
+| `-s`  | `--section`  | `all`          | Changes section to show         |
+| `-F`  | `--format`   | `raw`          | Ouput format                    |
+|       | `--from`     |                | Filter release before this date |
+|       | `--to`       |                | Filter release after this date  |
+| `-C`  | `--no-color` |                | Disable ouput colors            |
 
 ### release
 
@@ -49,6 +51,7 @@ $ chlg show [options] <release>
 | Short | Long     | Default        | Description             |
 | ----- | -------- | -------------- | ----------------------- |
 | `-f`  | `--file` | `CHANGELOG.md` | The change log filename |
+| `-d`  | `--date` | Current date   | Set the release date    |
 
 ### insert
 

@@ -1,9 +1,10 @@
 'use strict';
 
-var expect    = require('chai').expect;
-var fs        = require('fs');
-var path      = require('path');
-var spawnSync = require('child_process').spawnSync;
+var expect     = require('chai').expect;
+var fs         = require('fs');
+var path       = require('path');
+var proxyquire = require('proxyquire');
+var spawnSync  = require('child_process').spawnSync;
 
 var chlgInit    = require('../../lib/chlg-init');
 var fileCompare = require('../helpers/file-compare');
@@ -65,15 +66,6 @@ describe('chlg-init', function () {
       });
     });
 
-    it('should return error on existing file', function (done) {
-      chlgInit(filename, function (err) {
-        expect(err).to.exist;
-        expect(err.message).to.equal('Cannot create file ‘' + filename + '’: File exists');
-
-        return done();
-      });
-    });
-
     it('should use \'CHANGELOG.md\' as default filename', function (done) {
       chlgInit(function (err) {
         expect(err).to.not.exist;
@@ -83,6 +75,44 @@ describe('chlg-init', function () {
           expect(match).to.equal(true);
           return done();
         });
+      });
+    });
+
+    it('should return error on existing file', function (done) {
+      chlgInit(filename, function (err) {
+        expect(err).to.exist;
+        expect(err.message).to.equal('Cannot create file ‘' + filename + '’: File exists');
+
+        return done();
+      });
+    });
+
+    it('should return error on bad \'file\' parameter type', function (done) {
+      chlgInit(1, function (err) {
+        expect(err).to.exist;
+        expect(err.message).to.equal('Parameter ‘file’ must be a string');
+
+        return done();
+      });
+    });
+
+    it('should return file writing error', function (done) {
+      // Fix the 'possible EventEmitter memory leak detected' warning
+      require('events').defaultMaxListeners = 15;
+
+      var chlgInit = proxyquire('../../lib/chlg-init', {
+        'fs': {
+          writeFile: function (file, data, options, callback) {
+            return callback(new Error('Fake error'));
+          }
+        }
+      });
+
+      chlgInit('CHANGELOG-error.md', function (err) {
+        expect(err).to.exist;
+        expect(err.message).to.equal('Cannot create file ‘CHANGELOG-error.md’: Fake error');
+
+        return done();
       });
     });
 
