@@ -1,0 +1,47 @@
+'use strict';
+
+var chalk   = require('chalk');
+var program = require('commander');
+
+var formatter = require('../lib/format');
+
+var chlgShow = require('../lib/chlg-show');
+
+function collect(val, memo) {
+  memo.push(val);
+  return memo;
+}
+
+program
+  .option('-f, --file [filename]', 'Changelog filename', 'CHANGELOG.md')
+  .option('-r, --release [release]', 'Release version to show', collect, [])
+  .option('-s, --section [section]', 'Changes section to show', collect, [])
+  .option('-F, --format [format]', 'Ouput format', 'raw')
+  .option('--from [date]', 'Filter release before this date')
+  .option('--to [date]', 'Filter release after this date')
+  .option('-C, --no-color', 'Disable ouput colors')
+  .parse(process.argv);
+
+chalk.enabled = program.color;
+
+chlgShow({
+  file:     program.file,
+  releases: program.release,
+  sections: program.section,
+  from:     program.from,
+  to:       program.to
+}, function (error, logs) {
+  if (error) {
+    console.error('chlg-show: ' + error.message);
+    process.exit(1);
+  }
+
+  formatter(program.format, logs, function (err, lines) {
+    if (err) {
+      console.error('chlg-show: ' + err.message);
+      process.exit(1);
+    }
+
+    console.log(lines);
+  });
+});
