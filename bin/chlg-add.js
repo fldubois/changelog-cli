@@ -1,0 +1,22 @@
+'use strict';
+
+var chlgAdd = require('../lib/chlg-add');
+
+var program = require('commander');
+
+program
+  .usage('[options] <message>')
+  .option('-f, --file [filename]', 'Changelog filename', 'CHANGELOG.md')
+  .parse(process.argv);
+
+if (program.args.length < 1) {
+  console.error('usage: chlg add [options] <message>');
+  process.exit(1);
+}
+
+chlgAdd(program.args.join(' '), program.file, function (err) {
+  if (err) {
+    console.error('chlg-add: ' + err.message);
+    process.exit(1);
+  }
+});
