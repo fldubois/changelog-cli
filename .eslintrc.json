@@ -126,7 +126,7 @@
     // disallow unnecessary nested blocks
     "no-lone-blocks": 2,
     // disallow creation of functions within loops
-    "no-loop-func": 2,
+    "no-loop-func": 1,
     // disallow the use of magic numbers
     "no-magic-numbers": [1, {"ignore": [-1, 0, 1, 2]}],
     // disallow use of multiple spaces
