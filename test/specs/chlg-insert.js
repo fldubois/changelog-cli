@@ -39,7 +39,7 @@ function copy(source, target, callback) {
   input.pipe(output);
 }
 
-describe('chlg-init', function () {
+describe('chlg-insert', function () {
 
   before('Change CWD to test/data directory', function (done) {
     fs.stat(dataDir, function (error, stats) {
@@ -66,7 +66,7 @@ describe('chlg-init', function () {
     copy(path.join(fixtures, 'CHANGELOG-show.md'), 'CHANGELOG.md', function (error) {
       expect(error).to.not.exist;
 
-      chlgInsert('Changed', 'Change feature 6', 'CHANGELOG.md', function (error) {
+      chlgInsert('Changed', 'Change feature 6', function (error) {
         expect(error).to.not.exist;
 
         fileCompare('CHANGELOG.md', path.join(fixtures, 'CHANGELOG-insert-message.md'), function (error, match) {
@@ -98,7 +98,7 @@ describe('chlg-init', function () {
     copy(path.join(fixtures, 'CHANGELOG-show.md'), 'CHANGELOG.md', function (error) {
       expect(error).to.not.exist;
 
-      chlgInsert('Security', 'Feature 5', 'CHANGELOG.md', function (error) {
+      chlgInsert('Security', 'Feature 5', function (error) {
         expect(error).to.not.exist;
 
         fileCompare('CHANGELOG.md', path.join(fixtures, 'CHANGELOG-insert-section.md'), function (error, match) {
@@ -114,7 +114,7 @@ describe('chlg-init', function () {
     copy(path.join(fixtures, 'CHANGELOG-init.md'), 'CHANGELOG.md', function (error) {
       expect(error).to.not.exist;
 
-      chlgInsert('Added', 'Add feature 1', 'CHANGELOG.md', function (error) {
+      chlgInsert('Added', 'Add feature 1', function (error) {
         expect(error).to.not.exist;
 
         fileCompare('CHANGELOG.md', path.join(fixtures, 'CHANGELOG-insert-first.md'), function (error, match) {
@@ -127,7 +127,7 @@ describe('chlg-init', function () {
   });
 
   it('should return error on bad section name', function (done) {
-    chlgInsert('Not a section', 'Message', 'CHANGELOG.md', function (error) {
+    chlgInsert('Not a section', 'Message', function (error) {
       expect(error).to.exist;
       expect(error.message).to.equal('‘Not a section’ is not a valid change log section');
 
@@ -135,8 +135,8 @@ describe('chlg-init', function () {
     });
   });
 
-  it('should return error on bad section name', function (done) {
-    chlgInsert('Added', 'Message', 'CHANGELOG-NOT-HERE.md', function (error) {
+  it('should return error on file not found', function (done) {
+    chlgInsert('Added', 'Message', {file: 'CHANGELOG-NOT-HERE.md'}, function (error) {
       expect(error).to.exist;
       expect(error.code).to.equal('ENOENT');
       expect(error.path).to.match(/(\/|\\)CHANGELOG-NOT-HERE.md$/);
