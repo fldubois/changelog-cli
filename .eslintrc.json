@@ -64,7 +64,7 @@
     // require calls to isNaN() when checking for NaN
     "use-isnan": "error",
     // enforce valid JSDoc comments
-    "valid-jsdoc": ["warn", {"requireReturn": false}],
+    "valid-jsdoc": "off",
     // enforce comparing typeof expressions against valid strings
     "valid-typeof": "error",
 
