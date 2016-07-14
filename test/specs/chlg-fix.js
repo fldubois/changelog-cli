@@ -15,7 +15,7 @@ var chlgFix = proxyquire('../../lib/chlg-fix', {
 
 describe('chlg-fix', function () {
 
-  it('should bind chlgInsert with \'Fixed\' as section', function () {
+  it('should call chlgInsert with \'Fixed\' as section', function () {
     var message  = 'Hello, friend.';
     var filename = 'CHANGELOG.md';
     var callback = function () {};
