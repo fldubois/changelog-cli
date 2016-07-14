@@ -15,7 +15,7 @@ var chlgChange = proxyquire('../../lib/chlg-change', {
 
 describe('chlg-change', function () {
 
-  it('should bind chlgInsert with \'Changed\' as section', function () {
+  it('should call chlgInsert with \'Changed\' as section', function () {
     var message  = 'Hello, friend.';
     var filename = 'CHANGELOG.md';
     var callback = function () {};

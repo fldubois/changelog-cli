@@ -15,7 +15,7 @@ var chlgDeprecate = proxyquire('../../lib/chlg-deprecate', {
 
 describe('chlg-deprecate', function () {
 
-  it('should bind chlgInsert with \'Deprecated\' as section', function () {
+  it('should call chlgInsert with \'Deprecated\' as section', function () {
     var message  = 'Hello, friend.';
     var filename = 'CHANGELOG.md';
     var callback = function () {};
