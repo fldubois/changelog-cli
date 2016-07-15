@@ -15,7 +15,7 @@ var chlgRemove = proxyquire('../../lib/chlg-remove', {
 
 describe('chlg-remove', function () {
 
-  it('should bind chlgInsert with \'Removed\' as section', function () {
+  it('should call chlgInsert with \'Removed\' as section', function () {
     var message  = 'Hello, friend.';
     var filename = 'CHANGELOG.md';
     var callback = function () {};
