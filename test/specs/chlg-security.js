@@ -15,7 +15,7 @@ var chlgSecurity = proxyquire('../../lib/chlg-security', {
 
 describe('chlg-security', function () {
 
-  it('should bind chlgInsert with \'Security\' as section', function () {
+  it('should call chlgInsert with \'Security\' as section', function () {
     var message  = 'Hello, friend.';
     var filename = 'CHANGELOG.md';
     var callback = function () {};
