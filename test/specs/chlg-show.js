@@ -1,13 +1,15 @@
 'use strict';
 
 var expect    = require('chai').expect;
-var fs        = require('fs');
 var path      = require('path');
 var spawnSync = require('child_process').spawnSync;
 
 var chlgShow = require('../../lib/chlg-show');
 
+var dirstack = require('../helpers/dirstack');
+
 var dataDir = path.resolve(__dirname, '../data');
+
 var fixtures = {
   valid: path.resolve(__dirname, '../fixtures/CHANGELOG-show.md'),
   empty: path.resolve(__dirname, '../fixtures/CHANGELOG-init.md'),
@@ -46,20 +48,7 @@ function filter(logs, releases, sections) {
 describe('chlg-show', function () {
 
   before('Change CWD to test/data directory', function (done) {
-    fs.stat(dataDir, function (error, stats) {
-      if (error) {
-        return done(error);
-      }
-
-      if (!stats.isDirectory()) {
-        return done(new Error('test/data is not a directory'));
-      }
-
-      cwd = process.cwd();
-      process.chdir(dataDir);
-
-      return done();
-    });
+    dirstack.push(dataDir, done);
   });
 
   it('should read logs from changelog file', function (done) {
@@ -244,7 +233,7 @@ describe('chlg-show', function () {
   });
 
   after('Restore CWD', function () {
-    process.chdir(cwd);
+    dirstack.pop();
   });
 
 });

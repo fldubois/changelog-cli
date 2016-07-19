@@ -6,13 +6,13 @@ var path       = require('path');
 var proxyquire = require('proxyquire');
 var spawnSync  = require('child_process').spawnSync;
 
-var chlgInit    = require('../../lib/chlg-init');
+var chlgInit = require('../../lib/chlg-init');
+
+var dirstack    = require('../helpers/dirstack');
 var fileCompare = require('../helpers/file-compare');
 
 var dataDir = path.resolve(__dirname, '../data');
 var fixture = path.resolve(__dirname, '../fixtures/CHANGELOG-init.md');
-
-var cwd = '';
 
 var filename = 'CHANGELOG-module.md';
 
@@ -35,20 +35,7 @@ function cleanDataDirectory(done) {
 describe('chlg-init', function () {
 
   before('Change CWD to test/data directory', function (done) {
-    fs.stat(dataDir, function (err, stats) {
-      if (err) {
-        return done(err);
-      }
-
-      if (!stats.isDirectory()) {
-        return done(new Error('test/data is not a directory'));
-      }
-
-      cwd = process.cwd();
-      process.chdir(dataDir);
-
-      return done();
-    });
+    dirstack.push(dataDir, done);
   });
 
   before('Delete files in /test/data directory', cleanDataDirectory);
@@ -118,7 +105,7 @@ describe('chlg-init', function () {
   after('Delete files in /test/data directory', cleanDataDirectory);
 
   after('Restore CWD', function () {
-    process.chdir(cwd);
+    dirstack.pop();
   });
 
 });

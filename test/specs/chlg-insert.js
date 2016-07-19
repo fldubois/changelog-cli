@@ -1,16 +1,16 @@
 'use strict';
 
-var expect    = require('chai').expect;
-var fs        = require('fs');
-var path      = require('path');
+var expect = require('chai').expect;
+var fs     = require('fs');
+var path   = require('path');
 
-var chlgInsert  = require('../../lib/chlg-insert');
+var chlgInsert = require('../../lib/chlg-insert');
+
+var dirstack    = require('../helpers/dirstack');
 var fileCompare = require('../helpers/file-compare');
 
 var dataDir  = path.resolve(__dirname, '../data');
 var fixtures = path.resolve(__dirname, '../fixtures');
-
-var cwd = '';
 
 function cleanDataDirectory(done) {
   fs.readdir(dataDir, function (error, files) {
@@ -42,20 +42,7 @@ function copy(source, target, callback) {
 describe('chlg-insert', function () {
 
   before('Change CWD to test/data directory', function (done) {
-    fs.stat(dataDir, function (error, stats) {
-      if (error) {
-        return done(error);
-      }
-
-      if (!stats.isDirectory()) {
-        return done(new Error('test/data is not a directory'));
-      }
-
-      cwd = process.cwd();
-      process.chdir(dataDir);
-
-      return done();
-    });
+    dirstack.push(dataDir, done);
   });
 
   var filename = 'CHANGELOG-module.md';
@@ -148,7 +135,7 @@ describe('chlg-insert', function () {
   after('Delete files in /test/data directory', cleanDataDirectory);
 
   after('Restore CWD', function () {
-    process.chdir(cwd);
+    dirstack.pop();
   });
 
 });

@@ -6,6 +6,8 @@ var path   = require('path');
 
 var chlgRelease = require('../../lib/chlg-release');
 
+var dirstack = require('../helpers/dirstack');
+
 var dataDir = path.resolve(__dirname, '../data');
 
 var fixture = path.resolve(__dirname, '../fixtures/CHANGELOG-show.md');
@@ -42,20 +44,7 @@ function clean(callback) {
 describe('chlg-release', function () {
 
   before('Change CWD to test/data directory', function (done) {
-    fs.stat(dataDir, function (error, stats) {
-      if (error) {
-        return done(error);
-      }
-
-      if (!stats.isDirectory()) {
-        return done(new Error('test/data is not a directory'));
-      }
-
-      cwd = process.cwd();
-      process.chdir(dataDir);
-
-      return done();
-    });
+    dirstack.push(dataDir, done);
   });
 
   before('Delete files in /test/data directory', clean);
@@ -167,7 +156,7 @@ describe('chlg-release', function () {
   after('Delete files in /test/data directory', clean);
 
   after('Restore CWD', function () {
-    process.chdir(cwd);
+    dirstack.pop();
   });
 
 });
