@@ -6,27 +6,12 @@ var path   = require('path');
 
 var chlgInsert = require('../../lib/chlg-insert');
 
-var dirstack    = require('../helpers/dirstack');
-var fileCompare = require('../helpers/file-compare');
+var cleanDirectory = require('../helpers/clean-directory');
+var dirstack       = require('../helpers/dirstack');
+var fileCompare    = require('../helpers/file-compare');
 
 var dataDir  = path.resolve(__dirname, '../data');
 var fixtures = path.resolve(__dirname, '../fixtures');
-
-function cleanDataDirectory(done) {
-  fs.readdir(dataDir, function (error, files) {
-    if (error) {
-      return done(error);
-    }
-
-    files.forEach(function (file) {
-      if (file !== '.gitkeep') {
-        fs.unlinkSync(file);
-      }
-    });
-
-    return done();
-  });
-}
 
 function copy(source, target, callback) {
   var input  = fs.createReadStream(source);
@@ -47,7 +32,9 @@ describe('chlg-insert', function () {
 
   var filename = 'CHANGELOG-module.md';
 
-  before('Delete files in /test/data directory', cleanDataDirectory);
+  before('Delete files in /test/data directory', function (done) {
+    cleanDirectory(dataDir, done);
+  });
 
   it('should insert message in the right section', function (done) {
     copy(path.join(fixtures, 'CHANGELOG-show.md'), 'CHANGELOG.md', function (error) {
@@ -132,7 +119,9 @@ describe('chlg-insert', function () {
     });
   });
 
-  after('Delete files in /test/data directory', cleanDataDirectory);
+  after('Delete files in /test/data directory', function (done) {
+    cleanDirectory(dataDir, done);
+  });
 
   after('Restore CWD', function () {
     dirstack.pop();

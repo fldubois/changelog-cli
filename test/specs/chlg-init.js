@@ -8,29 +8,14 @@ var spawnSync  = require('child_process').spawnSync;
 
 var chlgInit = require('../../lib/chlg-init');
 
-var dirstack    = require('../helpers/dirstack');
-var fileCompare = require('../helpers/file-compare');
+var cleanDirectory = require('../helpers/clean-directory');
+var dirstack       = require('../helpers/dirstack');
+var fileCompare    = require('../helpers/file-compare');
 
 var dataDir = path.resolve(__dirname, '../data');
 var fixture = path.resolve(__dirname, '../fixtures/CHANGELOG-init.md');
 
 var filename = 'CHANGELOG-module.md';
-
-function cleanDataDirectory(done) {
-  fs.readdir(dataDir, function (err, files) {
-    if (err) {
-      return done(err);
-    }
-
-    files.forEach(function (file) {
-      if (file !== '.gitkeep') {
-        fs.unlinkSync(file);
-      }
-    });
-
-    return done();
-  });
-}
 
 describe('chlg-init', function () {
 
@@ -38,7 +23,9 @@ describe('chlg-init', function () {
     dirstack.push(dataDir, done);
   });
 
-  before('Delete files in /test/data directory', cleanDataDirectory);
+  before('Delete files in /test/data directory', function (done) {
+    cleanDirectory(dataDir, done);
+  });
 
   it('should create a new changelog file', function (done) {
     chlgInit(filename, function (err) {
@@ -102,7 +89,9 @@ describe('chlg-init', function () {
     });
   });
 
-  after('Delete files in /test/data directory', cleanDataDirectory);
+  after('Delete files in /test/data directory', function (done) {
+    cleanDirectory(dataDir, done);
+  });
 
   after('Restore CWD', function () {
     dirstack.pop();

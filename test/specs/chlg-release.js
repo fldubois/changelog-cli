@@ -6,7 +6,8 @@ var path   = require('path');
 
 var chlgRelease = require('../../lib/chlg-release');
 
-var dirstack = require('../helpers/dirstack');
+var cleanDirectory = require('../helpers/clean-directory');
+var dirstack       = require('../helpers/dirstack');
 
 var dataDir = path.resolve(__dirname, '../data');
 
@@ -25,29 +26,15 @@ function copy(source, target, callback) {
   input.pipe(output);
 }
 
-function clean(callback) {
-  fs.readdir(dataDir, function (error, files) {
-    if (error) {
-      return callback(error);
-    }
-
-    files.forEach(function (file) {
-      if (file !== '.gitkeep') {
-        fs.unlinkSync(file);
-      }
-    });
-
-    return callback();
-  });
-}
-
 describe('chlg-release', function () {
 
   before('Change CWD to test/data directory', function (done) {
     dirstack.push(dataDir, done);
   });
 
-  before('Delete files in /test/data directory', clean);
+  before('Delete files in /test/data directory', function (done) {
+    cleanDirectory(dataDir, done);
+  });
 
   beforeEach(function (done) {
     copy(fixture, 'CHANGELOG.md', function (error) {
@@ -153,7 +140,9 @@ describe('chlg-release', function () {
     });
   });
 
-  after('Delete files in /test/data directory', clean);
+  after('Delete files in /test/data directory', function (done) {
+    cleanDirectory(dataDir, done);
+  });
 
   after('Restore CWD', function () {
     dirstack.pop();
