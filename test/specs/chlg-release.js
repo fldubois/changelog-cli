@@ -8,23 +8,13 @@ var chlgRelease = require('../../lib/chlg-release');
 
 var cleanDirectory = require('../helpers/clean-directory');
 var dirstack       = require('../helpers/dirstack');
+var fileCopy       = require('../helpers/file-copy');
 
 var dataDir = path.resolve(__dirname, '../data');
 
 var fixture = path.resolve(__dirname, '../fixtures/CHANGELOG-show.md');
 
 var cwd = '';
-
-function copy(source, target, callback) {
-  var input  = fs.createReadStream(source);
-  var output = fs.createWriteStream(target);
-
-  input.on('error', callback);
-  output.on('error', callback);
-  output.on('close', callback);
-
-  input.pipe(output);
-}
 
 describe('chlg-release', function () {
 
@@ -37,7 +27,7 @@ describe('chlg-release', function () {
   });
 
   beforeEach(function (done) {
-    copy(fixture, 'CHANGELOG.md', function (error) {
+    fileCopy(fixture, 'CHANGELOG.md', function (error) {
       return done(error);
     });
   });
@@ -61,7 +51,7 @@ describe('chlg-release', function () {
     var date   = new Date().toISOString().split('T')[0];
     var search = '## [Unreleased][unreleased]\n\n## [1.0.0][' + date + ']\n';
 
-    copy(fixture.replace('-show.md', '-init.md'), 'CHANGELOG.md', function (error) {
+    fileCopy(fixture.replace('-show.md', '-init.md'), 'CHANGELOG.md', function (error) {
       expect(error).to.not.exist;
 
       chlgRelease('1.0.0', function (error) {

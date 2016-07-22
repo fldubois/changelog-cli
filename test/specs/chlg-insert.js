@@ -9,20 +9,10 @@ var chlgInsert = require('../../lib/chlg-insert');
 var cleanDirectory = require('../helpers/clean-directory');
 var dirstack       = require('../helpers/dirstack');
 var fileCompare    = require('../helpers/file-compare');
+var fileCopy       = require('../helpers/file-copy');
 
 var dataDir  = path.resolve(__dirname, '../data');
 var fixtures = path.resolve(__dirname, '../fixtures');
-
-function copy(source, target, callback) {
-  var input  = fs.createReadStream(source);
-  var output = fs.createWriteStream(target);
-
-  input.on('error', callback);
-  output.on('error', callback);
-  output.on('close', callback);
-
-  input.pipe(output);
-}
 
 describe('chlg-insert', function () {
 
@@ -37,7 +27,7 @@ describe('chlg-insert', function () {
   });
 
   it('should insert message in the right section', function (done) {
-    copy(path.join(fixtures, 'CHANGELOG-show.md'), 'CHANGELOG.md', function (error) {
+    fileCopy(path.join(fixtures, 'CHANGELOG-show.md'), 'CHANGELOG.md', function (error) {
       expect(error).to.not.exist;
 
       chlgInsert('Changed', 'Change feature 6', function (error) {
@@ -53,7 +43,7 @@ describe('chlg-insert', function () {
   });
 
   it('should use \'CHANGELOG.md\' as default filename', function (done) {
-    copy(path.join(fixtures, 'CHANGELOG-show.md'), 'CHANGELOG.md', function (error) {
+    fileCopy(path.join(fixtures, 'CHANGELOG-show.md'), 'CHANGELOG.md', function (error) {
       expect(error).to.not.exist;
 
       chlgInsert('Changed', 'Change feature 6', function (error) {
@@ -69,7 +59,7 @@ describe('chlg-insert', function () {
   });
 
   it('should create section if necessary', function (done) {
-    copy(path.join(fixtures, 'CHANGELOG-show.md'), 'CHANGELOG.md', function (error) {
+    fileCopy(path.join(fixtures, 'CHANGELOG-show.md'), 'CHANGELOG.md', function (error) {
       expect(error).to.not.exist;
 
       chlgInsert('Security', 'Feature 5', function (error) {
@@ -85,7 +75,7 @@ describe('chlg-insert', function () {
   });
 
   it('should insert the first section and message', function (done) {
-    copy(path.join(fixtures, 'CHANGELOG-init.md'), 'CHANGELOG.md', function (error) {
+    fileCopy(path.join(fixtures, 'CHANGELOG-init.md'), 'CHANGELOG.md', function (error) {
       expect(error).to.not.exist;
 
       chlgInsert('Added', 'Add feature 1', function (error) {
