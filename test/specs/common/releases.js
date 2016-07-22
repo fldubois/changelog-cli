@@ -54,17 +54,17 @@ describe('common/releases', function() {
       var extract1 = releases.extract('## [' + releases.UNRELEASED + '][unreleased]');
 
       expect(extract1).to.be.an('object');
-      expect(extract1).to.deep.equal({version: releases.UNRELEASED, date: 'unreleased'});
+      expect(extract1).to.deep.equal({version: releases.UNRELEASED, date: null});
 
       var extract3 = releases.extract('## [0.0.0][1970-01-01]');
 
       expect(extract3).to.be.an('object');
-      expect(extract3).to.deep.equal({version: '0.0.0', date: '1970-01-01'});
+      expect(extract3).to.deep.equal({version: '0.0.0', date: new Date('1970-01-01')});
 
       var extract4 = releases.extract('## [12.2.57][2014-01-25]');
 
       expect(extract4).to.be.an('object');
-      expect(extract4).to.deep.equal({version: '12.2.57', date: '2014-01-25'});
+      expect(extract4).to.deep.equal({version: '12.2.57', date: new Date('2014-01-25')});
     });
 
     it('should return null for bad section header', function () {

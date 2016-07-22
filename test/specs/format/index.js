@@ -51,7 +51,13 @@ describe('format', function() {
   it('should accept "json" format', function (done) {
     format('json', fixture, function (error, lines) {
       expect(error).to.equal(null);
-      expect(lines).to.equal(JSON.stringify(fixture, null, 2));
+      expect(lines).to.equal(JSON.stringify(fixture, function (key, value) {
+        if (key === 'date' && typeof value === 'string') {
+          return value.split('T')[0];
+        }
+
+        return value;
+      }, 2));
       done();
     });
   });
