@@ -1,16 +1,13 @@
 'use strict';
 
 var expect     = require('chai').expect;
-var fs         = require('fs');
 var path       = require('path');
 var proxyquire = require('proxyquire');
 var spawnSync  = require('child_process').spawnSync;
 
 var chlgInit = require('../../lib/chlg-init');
 
-var cleanDirectory = require('../helpers/clean-directory');
-var dirstack       = require('../helpers/dirstack');
-var fileCompare    = require('../helpers/file-compare');
+var fsUtils = require('../helpers/fs-utils');
 
 var dataDir = path.resolve(__dirname, '../data');
 var fixture = path.resolve(__dirname, '../fixtures/CHANGELOG-init.md');
@@ -20,18 +17,18 @@ var filename = 'CHANGELOG-module.md';
 describe('chlg-init', function () {
 
   before('Change CWD to test/data directory', function (done) {
-    dirstack.push(dataDir, done);
+    fsUtils.pushd(dataDir, done);
   });
 
   before('Delete files in /test/data directory', function (done) {
-    cleanDirectory(dataDir, done);
+    fsUtils.clean(dataDir, done);
   });
 
   it('should create a new changelog file', function (done) {
     chlgInit(filename, function (err) {
       expect(err).to.not.exist;
 
-      fileCompare(filename, fixture, function (err, match) {
+      fsUtils.compare(filename, fixture, function (err, match) {
         expect(err).to.not.exist;
         expect(match).to.equal(true);
         return done();
@@ -43,7 +40,7 @@ describe('chlg-init', function () {
     chlgInit(function (err) {
       expect(err).to.not.exist;
 
-      fileCompare('CHANGELOG.md', fixture, function (err, match) {
+      fsUtils.compare('CHANGELOG.md', fixture, function (err, match) {
         expect(err).to.not.exist;
         expect(match).to.equal(true);
         return done();
@@ -90,11 +87,11 @@ describe('chlg-init', function () {
   });
 
   after('Delete files in /test/data directory', function (done) {
-    cleanDirectory(dataDir, done);
+    fsUtils.clean(dataDir, done);
   });
 
   after('Restore CWD', function () {
-    dirstack.pop();
+    fsUtils.popd();
   });
 
 });

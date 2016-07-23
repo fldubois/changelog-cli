@@ -1,15 +1,11 @@
 'use strict';
 
 var expect = require('chai').expect;
-var fs     = require('fs');
 var path   = require('path');
 
 var chlgInsert = require('../../lib/chlg-insert');
 
-var cleanDirectory = require('../helpers/clean-directory');
-var dirstack       = require('../helpers/dirstack');
-var fileCompare    = require('../helpers/file-compare');
-var fileCopy       = require('../helpers/file-copy');
+var fsUtils = require('../helpers/fs-utils');
 
 var dataDir  = path.resolve(__dirname, '../data');
 var fixtures = path.resolve(__dirname, '../fixtures');
@@ -17,23 +13,23 @@ var fixtures = path.resolve(__dirname, '../fixtures');
 describe('chlg-insert', function () {
 
   before('Change CWD to test/data directory', function (done) {
-    dirstack.push(dataDir, done);
+    fsUtils.pushd(dataDir, done);
   });
 
   var filename = 'CHANGELOG-module.md';
 
   before('Delete files in /test/data directory', function (done) {
-    cleanDirectory(dataDir, done);
+    fsUtils.clean(dataDir, done);
   });
 
   it('should insert message in the right section', function (done) {
-    fileCopy(path.join(fixtures, 'CHANGELOG-show.md'), 'CHANGELOG.md', function (error) {
+    fsUtils.copy(path.join(fixtures, 'CHANGELOG-show.md'), 'CHANGELOG.md', function (error) {
       expect(error).to.not.exist;
 
       chlgInsert('Changed', 'Change feature 6', function (error) {
         expect(error).to.not.exist;
 
-        fileCompare('CHANGELOG.md', path.join(fixtures, 'CHANGELOG-insert-message.md'), function (error, match) {
+        fsUtils.compare('CHANGELOG.md', path.join(fixtures, 'CHANGELOG-insert-message.md'), function (error, match) {
           expect(error).to.not.exist;
           expect(match).to.equal(true);
           return done();
@@ -43,13 +39,13 @@ describe('chlg-insert', function () {
   });
 
   it('should use \'CHANGELOG.md\' as default filename', function (done) {
-    fileCopy(path.join(fixtures, 'CHANGELOG-show.md'), 'CHANGELOG.md', function (error) {
+    fsUtils.copy(path.join(fixtures, 'CHANGELOG-show.md'), 'CHANGELOG.md', function (error) {
       expect(error).to.not.exist;
 
       chlgInsert('Changed', 'Change feature 6', function (error) {
         expect(error).to.not.exist;
 
-        fileCompare('CHANGELOG.md', path.join(fixtures, 'CHANGELOG-insert-message.md'), function (error, match) {
+        fsUtils.compare('CHANGELOG.md', path.join(fixtures, 'CHANGELOG-insert-message.md'), function (error, match) {
           expect(error).to.not.exist;
           expect(match).to.equal(true);
           return done();
@@ -59,13 +55,13 @@ describe('chlg-insert', function () {
   });
 
   it('should create section if necessary', function (done) {
-    fileCopy(path.join(fixtures, 'CHANGELOG-show.md'), 'CHANGELOG.md', function (error) {
+    fsUtils.copy(path.join(fixtures, 'CHANGELOG-show.md'), 'CHANGELOG.md', function (error) {
       expect(error).to.not.exist;
 
       chlgInsert('Security', 'Feature 5', function (error) {
         expect(error).to.not.exist;
 
-        fileCompare('CHANGELOG.md', path.join(fixtures, 'CHANGELOG-insert-section.md'), function (error, match) {
+        fsUtils.compare('CHANGELOG.md', path.join(fixtures, 'CHANGELOG-insert-section.md'), function (error, match) {
           expect(error).to.not.exist;
           expect(match).to.equal(true);
           return done();
@@ -75,13 +71,13 @@ describe('chlg-insert', function () {
   });
 
   it('should insert the first section and message', function (done) {
-    fileCopy(path.join(fixtures, 'CHANGELOG-init.md'), 'CHANGELOG.md', function (error) {
+    fsUtils.copy(path.join(fixtures, 'CHANGELOG-init.md'), 'CHANGELOG.md', function (error) {
       expect(error).to.not.exist;
 
       chlgInsert('Added', 'Add feature 1', function (error) {
         expect(error).to.not.exist;
 
-        fileCompare('CHANGELOG.md', path.join(fixtures, 'CHANGELOG-insert-first.md'), function (error, match) {
+        fsUtils.compare('CHANGELOG.md', path.join(fixtures, 'CHANGELOG-insert-first.md'), function (error, match) {
           expect(error).to.not.exist;
           expect(match).to.equal(true);
           return done();
@@ -110,11 +106,11 @@ describe('chlg-insert', function () {
   });
 
   after('Delete files in /test/data directory', function (done) {
-    cleanDirectory(dataDir, done);
+    fsUtils.clean(dataDir, done);
   });
 
   after('Restore CWD', function () {
-    dirstack.pop();
+    fsUtils.popd();
   });
 
 });

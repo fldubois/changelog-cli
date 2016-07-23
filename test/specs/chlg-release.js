@@ -6,9 +6,7 @@ var path   = require('path');
 
 var chlgRelease = require('../../lib/chlg-release');
 
-var cleanDirectory = require('../helpers/clean-directory');
-var dirstack       = require('../helpers/dirstack');
-var fileCopy       = require('../helpers/file-copy');
+var fsUtils = require('../helpers/fs-utils');
 
 var dataDir = path.resolve(__dirname, '../data');
 
@@ -19,15 +17,15 @@ var cwd = '';
 describe('chlg-release', function () {
 
   before('Change CWD to test/data directory', function (done) {
-    dirstack.push(dataDir, done);
+    fsUtils.pushd(dataDir, done);
   });
 
   before('Delete files in /test/data directory', function (done) {
-    cleanDirectory(dataDir, done);
+    fsUtils.clean(dataDir, done);
   });
 
   beforeEach(function (done) {
-    fileCopy(fixture, 'CHANGELOG.md', function (error) {
+    fsUtils.copy(fixture, 'CHANGELOG.md', function (error) {
       return done(error);
     });
   });
@@ -51,7 +49,7 @@ describe('chlg-release', function () {
     var date   = new Date().toISOString().split('T')[0];
     var search = '## [Unreleased][unreleased]\n\n## [1.0.0][' + date + ']\n';
 
-    fileCopy(fixture.replace('-show.md', '-init.md'), 'CHANGELOG.md', function (error) {
+    fsUtils.copy(fixture.replace('-show.md', '-init.md'), 'CHANGELOG.md', function (error) {
       expect(error).to.not.exist;
 
       chlgRelease('1.0.0', function (error) {
@@ -131,11 +129,11 @@ describe('chlg-release', function () {
   });
 
   after('Delete files in /test/data directory', function (done) {
-    cleanDirectory(dataDir, done);
+    fsUtils.clean(dataDir, done);
   });
 
   after('Restore CWD', function () {
-    dirstack.pop();
+    fsUtils.popd();
   });
 
 });
