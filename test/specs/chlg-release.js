@@ -32,7 +32,7 @@ describe('chlg-release', function () {
 
   it('should add the release line in changelog', function (done) {
     var date   = new Date().toISOString().split('T')[0];
-    var search = '## [Unreleased][unreleased]\n\n## [1.0.0][' + date + ']\n\n### Added';
+    var search = '## [Unreleased]\n\n## [1.0.0] - ' + date + '\n\n### Added';
 
     chlgRelease('1.0.0', function (error) {
       expect(error).to.not.exist;
@@ -47,7 +47,7 @@ describe('chlg-release', function () {
 
   it('should succeed with empty changelog', function (done) {
     var date   = new Date().toISOString().split('T')[0];
-    var search = '## [Unreleased][unreleased]\n\n## [1.0.0][' + date + ']\n';
+    var search = '## [Unreleased]\n\n## [1.0.0] - ' + date + '\n';
 
     fsUtils.copy(fixture.replace('-show.md', '-init.md'), 'CHANGELOG.md', function (error) {
       expect(error).to.not.exist;
@@ -66,7 +66,7 @@ describe('chlg-release', function () {
 
   it('should accept the `date` option', function (done) {
     var date   = new Date('2030-01-01').toISOString().split('T')[0];
-    var search = '## [Unreleased][unreleased]\n\n## [1.0.0][' + date + ']\n\n### Added';
+    var search = '## [Unreleased]\n\n## [1.0.0] - ' + date + '\n\n### Added';
 
     chlgRelease('1.0.0', {date: '2030-01-01'}, function (error) {
       expect(error).to.not.exist;

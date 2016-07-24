@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased][unreleased]
+## [Unreleased]
 
 ### Added
 - Add feature 6
@@ -25,7 +25,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Security
 - Feature 5
 
-## [0.0.2][2012-12-21]
+## [0.0.2] - 2012-12-21
 
 ### Added
 - Add feature 4
@@ -40,7 +40,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Security
 - Feature 1
 
-## [0.0.1][1970-01-01]
+## [0.0.1] - 1970-01-01
 
 ### Added
 - Add feature 1

@@ -18,9 +18,9 @@ describe('common/releases', function() {
   describe('test', function () {
 
     it('should return true for valid section header', function () {
-      expect(releases.test('## [' + releases.UNRELEASED + '][unreleased]')).to.equal(true);
-      expect(releases.test('## [0.0.0][1970-01-01]')).to.equal(true);
-      expect(releases.test('## [12.2.57][2014-01-25]')).to.equal(true);
+      expect(releases.test('## [' + releases.UNRELEASED + ']')).to.equal(true);
+      expect(releases.test('## [0.0.0] - 1970-01-01')).to.equal(true);
+      expect(releases.test('## [12.2.57] - 2014-01-25')).to.equal(true);
     });
 
     it('should return false for bad section header', function () {
@@ -34,34 +34,34 @@ describe('common/releases', function() {
       expect(releases.test('')).to.equal(false);
       expect(releases.test('Hello')).to.equal(false);
 
-      expect(releases.test('## [0.1][1970-01-01]')).to.equal(false);
-      expect(releases.test('## [0.0.0.1][1970-01-01]')).to.equal(false);
-      expect(releases.test('## 0.0.0[1970-01-01]')).to.equal(false);
+      expect(releases.test('## [0.1] - 1970-01-01')).to.equal(false);
+      expect(releases.test('## [0.0.0.1] - 1970-01-01')).to.equal(false);
+      expect(releases.test('## 0.0.0 - 1970-01-01')).to.equal(false);
       expect(releases.test('## [0.0.0]1970-01-01')).to.equal(false);
-      expect(releases.test('## 0.0.0 1970-01-01')).to.equal(false);
-      expect(releases.test('## [0.0.0][1970-1-01]')).to.equal(false);
-      expect(releases.test('## [0.0.0][1970-01-1]')).to.equal(false);
-      expect(releases.test('## [0.0.0][1970-01]')).to.equal(false);
-      expect(releases.test('# [0.0.0][1970-01-01]')).to.equal(false);
-      expect(releases.test('[0.0.0][1970-01-01]')).to.equal(false);
+      expect(releases.test('## 0.0.0 - 1970-01-01')).to.equal(false);
+      expect(releases.test('## [0.0.0] - 1970-1-01')).to.equal(false);
+      expect(releases.test('## [0.0.0] - 1970-01-1')).to.equal(false);
+      expect(releases.test('## [0.0.0] - 1970-01')).to.equal(false);
+      expect(releases.test('# [0.0.0] - 1970-01-01')).to.equal(false);
+      expect(releases.test('[0.0.0] - 1970-01-01')).to.equal(false);
     });
 
   });
 
   describe('extract', function () {
 
-    it('should extract the section name for a valid section header', function () {
-      var extract1 = releases.extract('## [' + releases.UNRELEASED + '][unreleased]');
+    it('should extract the release number and date for a valid release header', function () {
+      var extract1 = releases.extract('## [' + releases.UNRELEASED + ']');
 
       expect(extract1).to.be.an('object');
       expect(extract1).to.deep.equal({version: releases.UNRELEASED, date: null});
 
-      var extract3 = releases.extract('## [0.0.0][1970-01-01]');
+      var extract3 = releases.extract('## [0.0.0] - 1970-01-01');
 
       expect(extract3).to.be.an('object');
       expect(extract3).to.deep.equal({version: '0.0.0', date: new Date('1970-01-01')});
 
-      var extract4 = releases.extract('## [12.2.57][2014-01-25]');
+      var extract4 = releases.extract('## [12.2.57] - 2014-01-25');
 
       expect(extract4).to.be.an('object');
       expect(extract4).to.deep.equal({version: '12.2.57', date: new Date('2014-01-25')});
