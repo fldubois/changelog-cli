@@ -14,7 +14,7 @@ if (program.args.length < 1) {
   process.exit(1);
 }
 
-chlgChange(program.args.join(' '), program.file, function (err) {
+chlgChange(program.args.join(' '), {file: program.file}, function (err) {
   if (err) {
     console.error('chlg-change: ' + err.message);
     process.exit(1);

@@ -14,7 +14,7 @@ if (program.args.length < 1) {
   process.exit(1);
 }
 
-chlgAdd(program.args.join(' '), program.file, function (err) {
+chlgAdd(program.args.join(' '), {file: program.file}, function (err) {
   if (err) {
     console.error('chlg-add: ' + err.message);
     process.exit(1);

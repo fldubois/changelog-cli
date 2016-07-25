@@ -14,7 +14,7 @@ if (program.args.length < 1) {
   process.exit(1);
 }
 
-chlgFix(program.args.join(' '), program.file, function (err) {
+chlgFix(program.args.join(' '), {file: program.file}, function (err) {
   if (err) {
     console.error('chlg-fix: ' + err.message);
     process.exit(1);

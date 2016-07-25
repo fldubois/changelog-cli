@@ -14,7 +14,7 @@ if (program.args.length < 1) {
   process.exit(1);
 }
 
-chlgDeprecate(program.args.join(' '), program.file, function (err) {
+chlgDeprecate(program.args.join(' '), {file: program.file}, function (err) {
   if (err) {
     console.error('chlg-deprecate: ' + err.message);
     process.exit(1);

@@ -14,7 +14,7 @@ if (program.args.length < 2) {
   process.exit(1);
 }
 
-chlgInsert(program.args.shift(), program.args.join(' '), program.file, function (err) {
+chlgInsert(program.args.shift(), program.args.join(' '), {file: program.file}, function (err) {
   if (err) {
     console.error('chlg-insert: ' + err.message);
     process.exit(1);

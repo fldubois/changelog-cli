@@ -14,7 +14,7 @@ if (program.args.length < 1) {
   process.exit(1);
 }
 
-chlgSecurity(program.args.join(' '), program.file, function (err) {
+chlgSecurity(program.args.join(' '), {file: program.file}, function (err) {
   if (err) {
     console.error('chlg-security: ' + err.message);
     process.exit(1);

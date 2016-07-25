@@ -15,7 +15,7 @@ if (program.args.length < 1) {
   process.exit(1);
 }
 
-chlgRelease(program.args[0], {date: program.date}, function (error) {
+chlgRelease(program.args[0], {file: program.file, date: program.date}, function (error) {
   if (error) {
     console.error('chlg-release: ' + error.message);
     process.exit(1);

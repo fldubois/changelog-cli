@@ -14,7 +14,7 @@ if (program.args.length < 1) {
   process.exit(1);
 }
 
-chlgRemove(program.args.join(' '), program.file, function (err) {
+chlgRemove(program.args.join(' '), {file: program.file}, function (err) {
   if (err) {
     console.error('chlg-remove: ' + err.message);
     process.exit(1);
