@@ -4,7 +4,7 @@ var expect = require('chai').expect;
 
 var releases = require('../../../lib/common/releases');
 
-describe('common/releases', function() {
+describe('common/releases', function () {
 
   it('should expose the unreleased label', function () {
     expect(releases.UNRELEASED).to.be.a('string');

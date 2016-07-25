@@ -4,7 +4,7 @@ var expect = require('chai').expect;
 
 var pretty = require('../../../lib/format/pretty');
 
-describe('format/pretty', function() {
+describe('format/pretty', function () {
 
   it('should expose formatter interface', function () {
     expect(pretty.release).to.be.a('function');

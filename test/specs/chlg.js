@@ -1,8 +1,5 @@
 'use strict';
 
-var path  = require('path');
-var spawnSync = require('child_process').spawnSync;
-
 var expect = require('chai').expect;
 
 var chlg = require('../../lib/chlg');
@@ -20,7 +17,7 @@ var commands = [
   'security'
 ];
 
-describe('chlg', function() {
+describe('chlg', function () {
 
   commands.forEach(function (command) {
     it('should export chlg-' + command, function () {

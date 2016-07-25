@@ -1,0 +1,47 @@
+{
+  "env": {
+    "mocha": true
+  },
+  "rules": {
+
+    // Possible Errors
+
+    // disallow control characters in regular expressions
+    "no-control-regex": "off",
+
+    // Best Practices
+
+    // enforce dot notation whenever possible
+    "dot-notation": ["error", {"allowKeywords": true, "allowPattern": "^[A-Za-z]+((_|-)[A-Za-z]+)+$"}],
+
+    // disallow empty functions
+    "no-empty-function": "off",
+
+    // Variables
+
+    // disallow var declarations from shadowing variables in the outer scope
+    "no-shadow": "off",
+
+    // disallow the use of undefined as an identifier
+    "no-undefined": "off",
+
+    // Node.js and CommonJS
+
+    // disallow synchronous methods
+    "no-sync": "off",
+
+    // Stylistic Issues
+
+    // enforce consistent spacing between keys and values in object literal properties
+    "key-spacing": ["error", {"beforeColon": false, "afterColon": true, "mode": "minimum"}],
+
+    // enforce a maximum depth that callbacks can be nested
+    "max-nested-callbacks": ["error", 5],
+
+    // require or disallow padding within blocks
+    "padded-blocks": "off",
+
+    // require JSDoc comments
+    "require-jsdoc": "off"
+  }
+}

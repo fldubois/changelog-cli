@@ -2,7 +2,6 @@
 
 var expect    = require('chai').expect;
 var path      = require('path');
-var spawnSync = require('child_process').spawnSync;
 
 var chlgShow = require('../../lib/chlg-show');
 
@@ -15,8 +14,6 @@ var fixtures = {
   empty: path.resolve(__dirname, '../fixtures/CHANGELOG-init.md'),
   logs:  require('../fixtures/logs.js')
 };
-
-var cwd = '';
 
 function filter(logs, releases, sections) {
   var filtered = {};
@@ -53,7 +50,7 @@ describe('chlg-show', function () {
 
   it('should read logs from changelog file', function (done) {
     chlgShow({file: fixtures.valid}, function (error, logs) {
-      expect(error).to.not.exist;
+      expect(error).to.equal(null);
       expect(logs).to.deep.equal(filter(fixtures.logs, ['Unreleased']));
       done();
     });
@@ -64,6 +61,7 @@ describe('chlg-show', function () {
       expect(error).to.be.an('error');
       expect(error.code).to.equal('ENOENT');
       expect(error.path).to.match(/(\/|\\)CHANGELOG.md$/);
+      expect(logs).to.be.an('undefined');
       done();
     });
   });
@@ -73,7 +71,7 @@ describe('chlg-show', function () {
       file: fixtures.valid,
       sections: ['Added', 'deprecated', 'FIXED']
     }, function (error, logs) {
-      expect(error).to.not.exist;
+      expect(error).to.equal(null);
       expect(logs).to.deep.equal(filter(fixtures.logs, ['Unreleased'], ['Added', 'Deprecated', 'Fixed']));
       done();
     });
@@ -84,7 +82,7 @@ describe('chlg-show', function () {
       file: fixtures.valid,
       releases: ['0.0.2']
     }, function (error, logs) {
-      expect(error).to.not.exist;
+      expect(error).to.equal(null);
       expect(logs).to.deep.equal(filter(fixtures.logs, ['0.0.2']));
       done();
     });
@@ -95,7 +93,7 @@ describe('chlg-show', function () {
       file: fixtures.valid,
       releases: ['0.0.x']
     }, function (error, logs) {
-      expect(error).to.not.exist;
+      expect(error).to.equal(null);
       expect(logs).to.deep.equal(filter(fixtures.logs, ['0.0.1', '0.0.2']));
       done();
     });
@@ -106,7 +104,7 @@ describe('chlg-show', function () {
       file: fixtures.valid,
       releases: ['all']
     }, function (error, logs) {
-      expect(error).to.not.exist;
+      expect(error).to.equal(null);
       expect(logs).to.deep.equal(fixtures.logs);
       done();
     });
@@ -117,7 +115,7 @@ describe('chlg-show', function () {
       file: fixtures.valid,
       releases: ['latest']
     }, function (error, logs) {
-      expect(error).to.not.exist;
+      expect(error).to.equal(null);
       expect(logs).to.deep.equal(filter(fixtures.logs, ['0.0.2']));
       done();
     });
@@ -129,7 +127,7 @@ describe('chlg-show', function () {
       releases: ['all'],
       from:     '2000-01-01'
     }, function (error, logs) {
-      expect(error).to.not.exist;
+      expect(error).to.equal(null);
       expect(logs).to.deep.equal(filter(fixtures.logs, ['Unreleased', '0.0.2']));
       done();
     });
@@ -141,7 +139,7 @@ describe('chlg-show', function () {
       releases: ['all'],
       to:       '2000-01-01'
     }, function (error, logs) {
-      expect(error).to.not.exist;
+      expect(error).to.equal(null);
       expect(logs).to.deep.equal(filter(fixtures.logs, ['0.0.1']));
       done();
     });
@@ -154,7 +152,7 @@ describe('chlg-show', function () {
       from:     '2000-01-01',
       to:       '2014-01-01'
     }, function (error, logs) {
-      expect(error).to.not.exist;
+      expect(error).to.equal(null);
       expect(logs).to.deep.equal(filter(fixtures.logs, ['0.0.2']));
       done();
     });
@@ -167,7 +165,7 @@ describe('chlg-show', function () {
     }, function (error, logs) {
       expect(error).to.be.an('error');
       expect(error.message).to.equal('‘Not a release’ is not valid semver version/range');
-      expect(logs).to.be.undefined;
+      expect(logs).to.be.an('undefined');
       done();
     });
   });
@@ -179,7 +177,7 @@ describe('chlg-show', function () {
     }, function (error, logs) {
       expect(error).to.be.an('error');
       expect(error.message).to.equal('‘bad’ is not valid changelog section');
-      expect(logs).to.be.undefined;
+      expect(logs).to.be.an('undefined');
       done();
     });
   });
@@ -191,7 +189,7 @@ describe('chlg-show', function () {
     }, function (error, logs) {
       expect(error).to.be.an('error');
       expect(error.message).to.equal('No matching release found');
-      expect(logs).to.be.undefined;
+      expect(logs).to.be.an('undefined');
       done();
     });
   });
@@ -203,7 +201,7 @@ describe('chlg-show', function () {
     }, function (error, logs) {
       expect(error).to.be.an('error');
       expect(error.message).to.equal('No matching release found');
-      expect(logs).to.be.undefined;
+      expect(logs).to.be.an('undefined');
       done();
     });
   });
@@ -215,7 +213,7 @@ describe('chlg-show', function () {
     }, function (error, logs) {
       expect(error).to.be.an('error');
       expect(error.message).to.equal('Date format must be YYYY-MM-DD');
-      expect(logs).to.be.undefined;
+      expect(logs).to.be.an('undefined');
       done();
     });
   });
@@ -227,7 +225,7 @@ describe('chlg-show', function () {
     }, function (error, logs) {
       expect(error).to.be.an('error');
       expect(error.message).to.equal('Date format must be YYYY-MM-DD');
-      expect(logs).to.be.undefined;
+      expect(logs).to.be.an('undefined');
       done();
     });
   });

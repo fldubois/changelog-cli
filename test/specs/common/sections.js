@@ -4,7 +4,7 @@ var expect = require('chai').expect;
 
 var sections = require('../../../lib/common/sections');
 
-describe('common/sections', function() {
+describe('common/sections', function () {
 
   it('should expose sections names', function () {
     expect(sections.ADDED).to.be.a('string');
@@ -77,9 +77,9 @@ describe('common/sections', function() {
   describe('after', function () {
 
     var scenarios = {
-      'Added':    ['Changed', 'Deprecated', 'Removed', 'Fixed', 'Security'],
-      'Removed':  ['Fixed', 'Security'],
-      'Security': []
+      Added:    ['Changed', 'Deprecated', 'Removed', 'Fixed', 'Security'],
+      Removed:  ['Fixed', 'Security'],
+      Security: []
     };
 
     it('should return the list of next sections', function () {

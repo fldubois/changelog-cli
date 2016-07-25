@@ -4,7 +4,7 @@ var expect = require('chai').expect;
 
 var dates = require('../../../lib/common/dates');
 
-describe('common/dates', function() {
+describe('common/dates', function () {
 
   it('should expose utils functions', function () {
     expect(dates.format).to.be.a('function');
@@ -41,8 +41,9 @@ describe('common/dates', function() {
     it('should return Date instance for correctly formatted date string', function () {
       var test = function (string) {
         var date = dates.parse(string);
+
         expect(date).to.be.instanceof(Date);
-        expect(date.getTime()).to.not.be.NaN;
+        expect(date.getTime()).to.not.eql(NaN);
       };
 
       test('1970-01-01');
@@ -71,8 +72,9 @@ describe('common/dates', function() {
     it('should return "Invalid Date" for incorrect date', function () {
       var test = function (string) {
         var date = dates.parse(string);
+
         expect(date).to.be.instanceof(Date);
-        expect(date.getTime()).to.be.NaN;
+        expect(date.getTime()).to.eql(NaN);
       };
 
       test('1970-01-32');

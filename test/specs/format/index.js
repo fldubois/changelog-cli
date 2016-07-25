@@ -5,24 +5,24 @@ var proxyquire = require('proxyquire');
 
 var format = proxyquire('../../../lib/format', {
   './brief.js': {
-    release: function (release, date) {
+    release: function (release) {
       return release;
     },
-    section: function (section) {
+    section: function () {
       return '';
     },
-    message: function (message) {
+    message: function () {
       return null;
     }
   },
   './raw.js': {
-    release: function (release, date) {
+    release: function () {
       throw new Error('Fake error');
     },
-    section: function (section) {
+    section: function () {
       return '';
     },
-    message: function (message) {
+    message: function () {
       return null;
     }
   }
@@ -30,7 +30,7 @@ var format = proxyquire('../../../lib/format', {
 
 var fixture = require('../../fixtures/logs');
 
-describe('format', function() {
+describe('format', function () {
 
   it('should be a function', function () {
     expect(format).to.be.a('function');
@@ -66,7 +66,7 @@ describe('format', function() {
     format('false', fixture, function (error, lines) {
       expect(error).to.be.an.instanceof(Error);
       expect(error.message).to.equal('Unknown format: ‘false’');
-      expect(lines).to.not.exists;
+      expect(lines).to.be.an('undefined');
       done();
     });
   });
@@ -75,7 +75,7 @@ describe('format', function() {
     format('raw', fixture, function (error, lines) {
       expect(error).to.be.an.instanceof(Error);
       expect(error.message).to.equal('Fake error');
-      expect(lines).to.not.exists;
+      expect(lines).to.be.an('undefined');
       done();
     });
   });

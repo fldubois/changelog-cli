@@ -20,7 +20,7 @@
     "bin": "./bin"
   },
   "scripts": {
-    "lint": "eslint lib",
+    "lint": "eslint lib test",
     "test": "istanbul cover node_modules/mocha/bin/_mocha -- test/specs --recursive"
   },
   "dependencies": {

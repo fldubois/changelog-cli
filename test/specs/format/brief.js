@@ -4,7 +4,7 @@ var expect = require('chai').expect;
 
 var brief = require('../../../lib/format/brief');
 
-describe('format/brief', function() {
+describe('format/brief', function () {
 
   it('should expose formatter interface', function () {
     expect(brief.release).to.be.a('function');
@@ -18,32 +18,32 @@ describe('format/brief', function() {
   });
 
   it('should format message line in section \'Added\'', function () {
-    brief.section('Added')
+    brief.section('Added');
     expect(brief.message('Hello, friend.')).to.equal(' + Hello, friend.');
   });
 
   it('should format message line in section \'Changed\'', function () {
-    brief.section('Changed')
+    brief.section('Changed');
     expect(brief.message('Hello, friend.')).to.equal(' ± Hello, friend.');
   });
 
   it('should format message line in section \'Deprecated\'', function () {
-    brief.section('Deprecated')
+    brief.section('Deprecated');
     expect(brief.message('Hello, friend.')).to.equal(' × Hello, friend.');
   });
 
   it('should format message line in section \'Removed\'', function () {
-    brief.section('Removed')
+    brief.section('Removed');
     expect(brief.message('Hello, friend.')).to.equal(' - Hello, friend.');
   });
 
   it('should format message line in section \'Fixed\'', function () {
-    brief.section('Fixed')
+    brief.section('Fixed');
     expect(brief.message('Hello, friend.')).to.equal(' # Hello, friend.');
   });
 
   it('should format message line in section \'Security\'', function () {
-    brief.section('Security')
+    brief.section('Security');
     expect(brief.message('Hello, friend.')).to.equal(' ! Hello, friend.');
   });
 

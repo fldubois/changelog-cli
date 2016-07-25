@@ -6,13 +6,6 @@ var PassThrough = require('stream').PassThrough;
 
 var StreamInsert = require('../../../lib/common/stream-insert');
 
-var inputLines = [
-  'Line 1',
-  'Line 2',
-  'Line 3',
-  'Line 4'
-];
-
 function insert(lines, stream, callback) {
   var input  = new PassThrough();
   var output = input.pipe(stream);
@@ -42,11 +35,10 @@ function insert(lines, stream, callback) {
   input.end();
 }
 
-describe('common/stream-insert', function() {
+describe('common/stream-insert', function () {
 
   it('should always create a StreamInsert instance', function () {
-    var stream = StreamInsert.apply({});
-    expect(stream).to.be.an.instanceof(StreamInsert);
+    expect(StreamInsert.apply({})).to.be.an.instanceof(StreamInsert);
   });
 
   it('should append the insertion after search', function (done) {

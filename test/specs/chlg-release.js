@@ -12,8 +12,6 @@ var dataDir = path.resolve(__dirname, '../data');
 
 var fixture = path.resolve(__dirname, '../fixtures/CHANGELOG-show.md');
 
-var cwd = '';
-
 describe('chlg-release', function () {
 
   before('Change CWD to test/data directory', function (done) {
@@ -35,10 +33,10 @@ describe('chlg-release', function () {
     var search = '## [Unreleased]\n\n## [1.0.0] - ' + date + '\n\n### Added';
 
     chlgRelease('1.0.0', function (error) {
-      expect(error).to.not.exist;
+      expect(error).to.equal(null);
 
-      fs.readFile('CHANGELOG.md', {encoding: 'utf8'}, function (err, content) {
-        expect(error).to.not.exist;
+      fs.readFile('CHANGELOG.md', {encoding: 'utf8'}, function (error, content) {
+        expect(error).to.equal(null);
         expect(content.indexOf(search)).to.not.equal(-1);
         done();
       });
@@ -50,13 +48,13 @@ describe('chlg-release', function () {
     var search = '## [Unreleased]\n\n## [1.0.0] - ' + date + '\n';
 
     fsUtils.copy(fixture.replace('-show.md', '-init.md'), 'CHANGELOG.md', function (error) {
-      expect(error).to.not.exist;
+      expect(error).to.be.an('undefined');
 
       chlgRelease('1.0.0', function (error) {
-        expect(error).to.not.exist;
+        expect(error).to.equal(null);
 
-        fs.readFile('CHANGELOG.md', {encoding: 'utf8'}, function (err, content) {
-          expect(error).to.not.exist;
+        fs.readFile('CHANGELOG.md', {encoding: 'utf8'}, function (error, content) {
+          expect(error).to.equal(null);
           expect(content.indexOf(search)).to.not.equal(-1);
           done();
         });
@@ -69,10 +67,10 @@ describe('chlg-release', function () {
     var search = '## [Unreleased]\n\n## [1.0.0] - ' + date + '\n\n### Added';
 
     chlgRelease('1.0.0', {date: '2030-01-01'}, function (error) {
-      expect(error).to.not.exist;
+      expect(error).to.equal(null);
 
-      fs.readFile('CHANGELOG.md', {encoding: 'utf8'}, function (err, content) {
-        expect(error).to.not.exist;
+      fs.readFile('CHANGELOG.md', {encoding: 'utf8'}, function (error, content) {
+        expect(error).to.equal(null);
         expect(content.indexOf(search)).to.not.equal(-1);
         done();
       });

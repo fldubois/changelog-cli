@@ -4,7 +4,7 @@ var expect = require('chai').expect;
 
 var raw = require('../../../lib/format/raw');
 
-describe('format/raw', function() {
+describe('format/raw', function () {
 
   it('should expose formatter interface', function () {
     expect(raw.release).to.be.a('function');

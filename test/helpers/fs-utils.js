@@ -22,7 +22,7 @@ module.exports = {
       return callback();
     });
   },
-  popd: function (callback) {
+  popd: function () {
     process.chdir(stack.length > 1 ? stack.pop() : stack[0]);
   },
   clean: function (path, ignores, callback) {
@@ -62,18 +62,18 @@ module.exports = {
     input.pipe(output);
   },
   compare: function (fileA, fileB, callback) {
-    fs.readFile(fileA, {encoding: 'utf8'}, function (err, contentA) {
-      if (err) {
-        return callback(err);
+    fs.readFile(fileA, {encoding: 'utf8'}, function (errorA, contentA) {
+      if (errorA) {
+        return callback(errorA);
       }
 
-      fs.readFile(fileB, {encoding: 'utf8'}, function (err, contentB) {
-        if (err) {
-          return callback(err);
+      fs.readFile(fileB, {encoding: 'utf8'}, function (errorB, contentB) {
+        if (errorB) {
+          return callback(errorB);
         }
 
         return callback(null, contentA === contentB);
       });
     });
   }
-}
+};
