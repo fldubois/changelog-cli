@@ -107,6 +107,25 @@ describe('chlg-release', function () {
     });
   });
 
+  it('should increment from zero version with empty changelog', function (done) {
+    var date   = new Date().toISOString().split('T')[0];
+    var search = '## [Unreleased]\n\n## [0.1.0] - ' + date + '\n';
+
+    fsUtils.copy(fixture.replace('-show.md', '-init.md'), 'CHANGELOG.md', function (error) {
+      expect(error).to.be.an('undefined');
+
+      chlgRelease('minor', function (error) {
+        expect(error).to.equal(null);
+
+        fs.readFile('CHANGELOG.md', {encoding: 'utf8'}, function (error, content) {
+          expect(error).to.equal(null);
+          expect(content.indexOf(search)).to.not.equal(-1);
+          done();
+        });
+      });
+    });
+  });
+
   it('should accept the `date` option', function (done) {
     var date   = new Date('2030-01-01').toISOString().split('T')[0];
     var search = '## [Unreleased]\n\n## [1.0.0] - ' + date + '\n\n### Added';
