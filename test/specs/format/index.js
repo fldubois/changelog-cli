@@ -38,6 +38,10 @@ describe('format', function () {
 
   it('should require the right format', function (done) {
     format('brief', fixture, function (error, lines) {
+      if (error) {
+        return done(error);
+      }
+
       expect(error).to.equal(null);
       expect(lines).to.equal([
         'Unreleased',
@@ -50,6 +54,10 @@ describe('format', function () {
 
   it('should accept "json" format', function (done) {
     format('json', fixture, function (error, lines) {
+      if (error) {
+        return done(error);
+      }
+
       expect(error).to.equal(null);
       expect(lines).to.equal(JSON.stringify(fixture, function (key, value) {
         if (key === 'date' && typeof value === 'string') {

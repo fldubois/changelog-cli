@@ -6,9 +6,9 @@ var stack = [process.cwd()];
 
 module.exports = {
   pushd: function (path, callback) {
-    fs.stat(path, function (err, stats) {
-      if (err) {
-        return callback(err);
+    fs.stat(path, function (error, stats) {
+      if (error) {
+        return callback(error);
       }
 
       if (!stats.isDirectory()) {

@@ -50,6 +50,10 @@ describe('chlg-show', function () {
 
   it('should read logs from changelog file', function (done) {
     chlgShow({file: fixtures.valid}, function (error, logs) {
+      if (error) {
+        return done(error);
+      }
+
       expect(error).to.equal(null);
       expect(logs).to.deep.equal(filter(fixtures.logs, ['Unreleased']));
       done();
@@ -71,6 +75,10 @@ describe('chlg-show', function () {
       file: fixtures.valid,
       sections: ['Added', 'deprecated', 'FIXED']
     }, function (error, logs) {
+      if (error) {
+        return done(error);
+      }
+
       expect(error).to.equal(null);
       expect(logs).to.deep.equal(filter(fixtures.logs, ['Unreleased'], ['Added', 'Deprecated', 'Fixed']));
       done();
@@ -82,6 +90,10 @@ describe('chlg-show', function () {
       file: fixtures.valid,
       releases: ['0.0.2']
     }, function (error, logs) {
+      if (error) {
+        return done(error);
+      }
+
       expect(error).to.equal(null);
       expect(logs).to.deep.equal(filter(fixtures.logs, ['0.0.2']));
       done();
@@ -93,6 +105,10 @@ describe('chlg-show', function () {
       file: fixtures.valid,
       releases: ['0.0.x']
     }, function (error, logs) {
+      if (error) {
+        return done(error);
+      }
+
       expect(error).to.equal(null);
       expect(logs).to.deep.equal(filter(fixtures.logs, ['0.0.1', '0.0.2']));
       done();
@@ -104,6 +120,10 @@ describe('chlg-show', function () {
       file: fixtures.valid,
       releases: ['all']
     }, function (error, logs) {
+      if (error) {
+        return done(error);
+      }
+
       expect(error).to.equal(null);
       expect(logs).to.deep.equal(fixtures.logs);
       done();
@@ -115,6 +135,10 @@ describe('chlg-show', function () {
       file: fixtures.valid,
       releases: ['latest']
     }, function (error, logs) {
+      if (error) {
+        return done(error);
+      }
+
       expect(error).to.equal(null);
       expect(logs).to.deep.equal(filter(fixtures.logs, ['0.0.2']));
       done();
@@ -127,6 +151,10 @@ describe('chlg-show', function () {
       releases: ['all'],
       from:     '2000-01-01'
     }, function (error, logs) {
+      if (error) {
+        return done(error);
+      }
+
       expect(error).to.equal(null);
       expect(logs).to.deep.equal(filter(fixtures.logs, ['Unreleased', '0.0.2']));
       done();
@@ -139,6 +167,10 @@ describe('chlg-show', function () {
       releases: ['all'],
       to:       '2000-01-01'
     }, function (error, logs) {
+      if (error) {
+        return done(error);
+      }
+
       expect(error).to.equal(null);
       expect(logs).to.deep.equal(filter(fixtures.logs, ['0.0.1']));
       done();
@@ -152,6 +184,10 @@ describe('chlg-show', function () {
       from:     '2000-01-01',
       to:       '2014-01-01'
     }, function (error, logs) {
+      if (error) {
+        return done(error);
+      }
+
       expect(error).to.equal(null);
       expect(logs).to.deep.equal(filter(fixtures.logs, ['0.0.2']));
       done();

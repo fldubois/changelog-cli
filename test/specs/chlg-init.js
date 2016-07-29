@@ -24,11 +24,18 @@ describe('chlg-init', function () {
   });
 
   it('should create a new changelog file', function (done) {
-    chlgInit(filename, function (err) {
-      expect(err).to.equal(null);
+    chlgInit(filename, function (error) {
+      if (error) {
+        return done(error);
+      }
 
-      fsUtils.compare(filename, fixture, function (err, match) {
-        expect(err).to.equal(null);
+      expect(error).to.equal(null);
+
+      fsUtils.compare(filename, fixture, function (error, match) {
+        if (error) {
+          return done(error);
+        }
+
         expect(match).to.equal(true);
 
         return done();
@@ -37,11 +44,18 @@ describe('chlg-init', function () {
   });
 
   it('should use \'CHANGELOG.md\' as default filename', function (done) {
-    chlgInit(function (err) {
-      expect(err).to.equal(null);
+    chlgInit(function (error) {
+      if (error) {
+        return done(error);
+      }
 
-      fsUtils.compare('CHANGELOG.md', fixture, function (err, match) {
-        expect(err).to.equal(null);
+      expect(error).to.equal(null);
+
+      fsUtils.compare('CHANGELOG.md', fixture, function (error, match) {
+        if (error) {
+          return done(error);
+        }
+
         expect(match).to.equal(true);
 
         return done();
@@ -50,18 +64,18 @@ describe('chlg-init', function () {
   });
 
   it('should return error on existing file', function (done) {
-    chlgInit(filename, function (err) {
-      expect(err).to.be.an('error');
-      expect(err.message).to.equal('Cannot create file ‘' + filename + '’: File exists');
+    chlgInit(filename, function (error) {
+      expect(error).to.be.an('error');
+      expect(error.message).to.equal('Cannot create file ‘' + filename + '’: File exists');
 
       return done();
     });
   });
 
   it('should return error on bad \'file\' parameter type', function (done) {
-    chlgInit(1, function (err) {
-      expect(err).to.be.an('error');
-      expect(err.message).to.equal('Parameter ‘file’ must be a string');
+    chlgInit(1, function (error) {
+      expect(error).to.be.an('error');
+      expect(error.message).to.equal('Parameter ‘file’ must be a string');
 
       return done();
     });
@@ -79,9 +93,9 @@ describe('chlg-init', function () {
       }
     });
 
-    chlgInit('CHANGELOG-error.md', function (err) {
-      expect(err).to.be.an('error');
-      expect(err.message).to.equal('Cannot create file ‘CHANGELOG-error.md’: Fake error');
+    chlgInit('CHANGELOG-error.md', function (error) {
+      expect(error).to.be.an('error');
+      expect(error.message).to.equal('Cannot create file ‘CHANGELOG-error.md’: Fake error');
 
       return done();
     });

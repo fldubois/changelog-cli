@@ -22,13 +22,22 @@ describe('chlg-insert', function () {
 
   it('should insert message in the right section', function (done) {
     fsUtils.copy(path.join(fixtures, 'CHANGELOG-show.md'), 'CHANGELOG.md', function (error) {
-      expect(error).to.be.an('undefined');
+      if (error) {
+        return done(error);
+      }
 
       chlgInsert('Changed', 'Change feature 6', function (error) {
+        if (error) {
+          return done(error);
+        }
+
         expect(error).to.equal(null);
 
         fsUtils.compare('CHANGELOG.md', path.join(fixtures, 'CHANGELOG-insert-message.md'), function (error, match) {
-          expect(error).to.equal(null);
+          if (error) {
+            return done(error);
+          }
+
           expect(match).to.equal(true);
 
           return done();
@@ -39,13 +48,22 @@ describe('chlg-insert', function () {
 
   it('should use \'CHANGELOG.md\' as default filename', function (done) {
     fsUtils.copy(path.join(fixtures, 'CHANGELOG-show.md'), 'CHANGELOG.md', function (error) {
-      expect(error).to.be.an('undefined');
+      if (error) {
+        return done(error);
+      }
 
       chlgInsert('Changed', 'Change feature 6', function (error) {
+        if (error) {
+          return done(error);
+        }
+
         expect(error).to.equal(null);
 
         fsUtils.compare('CHANGELOG.md', path.join(fixtures, 'CHANGELOG-insert-message.md'), function (error, match) {
-          expect(error).to.equal(null);
+          if (error) {
+            return done(error);
+          }
+
           expect(match).to.equal(true);
 
           return done();
@@ -56,13 +74,22 @@ describe('chlg-insert', function () {
 
   it('should create section if necessary', function (done) {
     fsUtils.copy(path.join(fixtures, 'CHANGELOG-show.md'), 'CHANGELOG.md', function (error) {
-      expect(error).to.be.an('undefined');
+      if (error) {
+        return done(error);
+      }
 
       chlgInsert('Security', 'Feature 5', function (error) {
+        if (error) {
+          return done(error);
+        }
+
         expect(error).to.equal(null);
 
         fsUtils.compare('CHANGELOG.md', path.join(fixtures, 'CHANGELOG-insert-section.md'), function (error, match) {
-          expect(error).to.equal(null);
+          if (error) {
+            return done(error);
+          }
+
           expect(match).to.equal(true);
 
           return done();
@@ -73,13 +100,22 @@ describe('chlg-insert', function () {
 
   it('should insert the first section and message', function (done) {
     fsUtils.copy(path.join(fixtures, 'CHANGELOG-init.md'), 'CHANGELOG.md', function (error) {
-      expect(error).to.be.an('undefined');
+      if (error) {
+        return done(error);
+      }
 
       chlgInsert('Added', 'Add feature 1', function (error) {
+        if (error) {
+          return done(error);
+        }
+
         expect(error).to.equal(null);
 
         fsUtils.compare('CHANGELOG.md', path.join(fixtures, 'CHANGELOG-insert-first.md'), function (error, match) {
-          expect(error).to.equal(null);
+          if (error) {
+            return done(error);
+          }
+
           expect(match).to.equal(true);
 
           return done();
