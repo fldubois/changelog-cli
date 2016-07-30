@@ -18,20 +18,20 @@ describe('common/dates', function () {
       expect(dates.format(new Date('2048-10-24'))).to.equal('2048-10-24');
     });
 
-    it('should return "unreleased" for bad values', function () {
-      expect(dates.format(true)).to.equal('unreleased');
-      expect(dates.format(false)).to.equal('unreleased');
-      expect(dates.format(NaN)).to.equal('unreleased');
-      expect(dates.format(0)).to.equal('unreleased');
-      expect(dates.format(-1)).to.equal('unreleased');
-      expect(dates.format(null)).to.equal('unreleased');
-      expect(dates.format(undefined)).to.equal('unreleased');
-      expect(dates.format('')).to.equal('unreleased');
-      expect(dates.format('Hello')).to.equal('unreleased');
-      expect(dates.format()).to.equal('unreleased');
-      expect(dates.format(Date.now())).to.equal('unreleased');
-      expect(dates.format(new Date('Invalid'))).to.equal('unreleased');
-      expect(dates.format(new Date('1970-01-32'))).to.equal('unreleased');
+    it('should return null for bad values', function () {
+      expect(dates.format(true)).to.equal(null);
+      expect(dates.format(false)).to.equal(null);
+      expect(dates.format(NaN)).to.equal(null);
+      expect(dates.format(0)).to.equal(null);
+      expect(dates.format(-1)).to.equal(null);
+      expect(dates.format(null)).to.equal(null);
+      expect(dates.format(undefined)).to.equal(null);
+      expect(dates.format('')).to.equal(null);
+      expect(dates.format('Hello')).to.equal(null);
+      expect(dates.format()).to.equal(null);
+      expect(dates.format(Date.now())).to.equal(null);
+      expect(dates.format(new Date('Invalid'))).to.equal(null);
+      expect(dates.format(new Date('1970-01-32'))).to.equal(null);
     });
 
   });
