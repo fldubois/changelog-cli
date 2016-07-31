@@ -12,7 +12,40 @@ var dataDir = path.resolve(__dirname, '../data');
 
 var fixture = path.resolve(__dirname, '../fixtures/CHANGELOG-show.md');
 
+function test(release, options, search, done) {
+  if (typeof options === 'string') {
+    done    = search;
+    search  = options;
+    options = null;
+  }
+
+  var callback = function (error) {
+    if (error) {
+      return done(error);
+    }
+
+    expect(error).to.equal(null);
+
+    fs.readFile('CHANGELOG.md', {encoding: 'utf8'}, function (error, content) {
+      if (error) {
+        return done(error);
+      }
+
+      expect(content.indexOf(search)).to.not.equal(-1);
+      done();
+    });
+  };
+
+  if (options !== null) {
+    chlgRelease(release, options, callback);
+  } else {
+    chlgRelease(release, callback);
+  }
+}
+
 describe('chlg-release', function () {
+
+  var date = new Date().toISOString().split('T')[0];
 
   before('Change CWD to test/data directory', function (done) {
     fsUtils.pushd(dataDir, done);
@@ -29,29 +62,12 @@ describe('chlg-release', function () {
   });
 
   it('should add the release line in changelog', function (done) {
-    var date   = new Date().toISOString().split('T')[0];
     var search = '## [Unreleased]\n\n## [1.0.0] - ' + date + '\n\n### Added';
 
-    chlgRelease('1.0.0', function (error) {
-      if (error) {
-        return done(error);
-      }
-
-      expect(error).to.equal(null);
-
-      fs.readFile('CHANGELOG.md', {encoding: 'utf8'}, function (error, content) {
-        if (error) {
-          return done(error);
-        }
-
-        expect(content.indexOf(search)).to.not.equal(-1);
-        done();
-      });
-    });
+    test('1.0.0', search, done);
   });
 
   it('should succeed with empty changelog', function (done) {
-    var date   = new Date().toISOString().split('T')[0];
     var search = '## [Unreleased]\n\n## [1.0.0] - ' + date + '\n';
 
     fsUtils.copy(fixture.replace('-show.md', '-init.md'), 'CHANGELOG.md', function (error) {
@@ -59,93 +75,29 @@ describe('chlg-release', function () {
         return done(error);
       }
 
-      chlgRelease('1.0.0', function (error) {
-        if (error) {
-          return done(error);
-        }
-
-        expect(error).to.equal(null);
-
-        fs.readFile('CHANGELOG.md', {encoding: 'utf8'}, function (error, content) {
-          if (error) {
-            return done(error);
-          }
-
-          expect(content.indexOf(search)).to.not.equal(-1);
-          done();
-        });
-      });
+      test('1.0.0', search, done);
     });
   });
 
   it('should accept `major` increment', function (done) {
-    var date   = new Date().toISOString().split('T')[0];
     var search = '## [Unreleased]\n\n## [1.0.0] - ' + date + '\n\n### Added';
 
-    chlgRelease('major', function (error) {
-      if (error) {
-        return done(error);
-      }
-
-      expect(error).to.equal(null);
-
-      fs.readFile('CHANGELOG.md', {encoding: 'utf8'}, function (error, content) {
-        if (error) {
-          return done(error);
-        }
-
-        expect(content.indexOf(search)).to.not.equal(-1);
-        done();
-      });
-    });
+    test('major', search, done);
   });
 
   it('should accept `minor` increment', function (done) {
-    var date   = new Date().toISOString().split('T')[0];
     var search = '## [Unreleased]\n\n## [0.1.0] - ' + date + '\n\n### Added';
 
-    chlgRelease('minor', function (error) {
-      if (error) {
-        return done(error);
-      }
-
-      expect(error).to.equal(null);
-
-      fs.readFile('CHANGELOG.md', {encoding: 'utf8'}, function (error, content) {
-        if (error) {
-          return done(error);
-        }
-
-        expect(content.indexOf(search)).to.not.equal(-1);
-        done();
-      });
-    });
+    test('minor', search, done);
   });
 
   it('should accept `patch` increment', function (done) {
-    var date   = new Date().toISOString().split('T')[0];
     var search = '## [Unreleased]\n\n## [0.0.3] - ' + date + '\n\n### Added';
 
-    chlgRelease('patch', function (error) {
-      if (error) {
-        return done(error);
-      }
-
-      expect(error).to.equal(null);
-
-      fs.readFile('CHANGELOG.md', {encoding: 'utf8'}, function (error, content) {
-        if (error) {
-          return done(error);
-        }
-
-        expect(content.indexOf(search)).to.not.equal(-1);
-        done();
-      });
-    });
+    test('patch', search, done);
   });
 
   it('should increment from zero version with empty changelog', function (done) {
-    var date   = new Date().toISOString().split('T')[0];
     var search = '## [Unreleased]\n\n## [0.1.0] - ' + date + '\n';
 
     fsUtils.copy(fixture.replace('-show.md', '-init.md'), 'CHANGELOG.md', function (error) {
@@ -153,22 +105,7 @@ describe('chlg-release', function () {
         return done(error);
       }
 
-      chlgRelease('minor', function (error) {
-        if (error) {
-          return done(error);
-        }
-
-        expect(error).to.equal(null);
-
-        fs.readFile('CHANGELOG.md', {encoding: 'utf8'}, function (error, content) {
-          if (error) {
-            return done(error);
-          }
-
-          expect(content.indexOf(search)).to.not.equal(-1);
-          done();
-        });
-      });
+      test('minor', search, done);
     });
   });
 
@@ -176,22 +113,7 @@ describe('chlg-release', function () {
     var date   = new Date('2030-01-01').toISOString().split('T')[0];
     var search = '## [Unreleased]\n\n## [1.0.0] - ' + date + '\n\n### Added';
 
-    chlgRelease('1.0.0', {date: '2030-01-01'}, function (error) {
-      if (error) {
-        return done(error);
-      }
-
-      expect(error).to.equal(null);
-
-      fs.readFile('CHANGELOG.md', {encoding: 'utf8'}, function (error, content) {
-        if (error) {
-          return done(error);
-        }
-
-        expect(content.indexOf(search)).to.not.equal(-1);
-        done();
-      });
-    });
+    test('1.0.0', {date: '2030-01-01'}, search, done);
   });
 
   it('should accept the `file` option', function (done) {
