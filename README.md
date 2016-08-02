@@ -2,6 +2,46 @@
 
 > Simple command line interface to edit CHANGELOG files according to [keepachangelog.com](http://keepachangelog.com/) rules.
 
+## Command line usage
+
+* Install `changelog-cli` (global installation is recommended for command line usage)
+
+```
+$ npm install --global git+https://fldubois@github.com/changelog-cli.git
+```
+
+* Start using the command line interface
+
+```
+$ chlg init
+$ chlg add "New awesome feature"
+$ chlg release 1.0.0
+```
+
+## Programmatic usage
+
+* Install `changelog-cli` in your project
+
+```
+$ npm install --save-dev git+https://fldubois@github.com/changelog-cli.git
+```
+
+* Start using the API
+
+```js
+'use strict';
+
+var chlg = require('changelog-cli');
+
+chlg.init(function (err) {
+  if (err) {
+    console.error(err);
+  } else {
+    console.log('Changelog initialized');
+  }
+});
+```
+
 ## Commands
 
 ### init
