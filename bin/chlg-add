@@ -1,6 +1,8 @@
+#!/usr/bin/env node
+
 'use strict';
 
-var chlgFix = require('../lib/chlg-fix');
+var chlgAdd = require('../lib/chlg-add');
 
 var program = require('commander');
 
@@ -10,13 +12,13 @@ program
   .parse(process.argv);
 
 if (program.args.length < 1) {
-  console.error('usage: chlg fix [options] <message>');
+  console.error('usage: chlg add [options] <message>');
   process.exit(1);
 }
 
-chlgFix(program.args.join(' '), {file: program.file}, function (err) {
+chlgAdd(program.args.join(' '), {file: program.file}, function (err) {
   if (err) {
-    console.error('chlg-fix: ' + err.message);
+    console.error('chlg-add: ' + err.message);
     process.exit(1);
   }
 });

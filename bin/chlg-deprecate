@@ -1,6 +1,8 @@
+#!/usr/bin/env node
+
 'use strict';
 
-var chlgAdd = require('../lib/chlg-add');
+var chlgDeprecate = require('../lib/chlg-deprecate');
 
 var program = require('commander');
 
@@ -10,13 +12,13 @@ program
   .parse(process.argv);
 
 if (program.args.length < 1) {
-  console.error('usage: chlg add [options] <message>');
+  console.error('usage: chlg deprecate [options] <message>');
   process.exit(1);
 }
 
-chlgAdd(program.args.join(' '), {file: program.file}, function (err) {
+chlgDeprecate(program.args.join(' '), {file: program.file}, function (err) {
   if (err) {
-    console.error('chlg-add: ' + err.message);
+    console.error('chlg-deprecate: ' + err.message);
     process.exit(1);
   }
 });
