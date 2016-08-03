@@ -1,5 +1,7 @@
 'use strict';
 
+var Writable = require('stream').Writable;
+
 var expect     = require('chai').expect;
 var path       = require('path');
 var proxyquire = require('proxyquire');
@@ -87,8 +89,14 @@ describe('chlg-init', function () {
 
     var chlgInit = proxyquire('../../lib/chlg-init', {
       fs: {
-        writeFile: function (file, data, options, callback) {
-          return callback(new Error('Fake error'));
+        createWriteStream: function () {
+          var stream = new Writable();
+
+          stream.on('pipe', function () {
+            stream.emit('error', new Error('Fake error'));
+          });
+
+          return stream;
         }
       }
     });
