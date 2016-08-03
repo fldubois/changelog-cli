@@ -18,6 +18,32 @@ $ chlg add "New awesome feature"
 $ chlg release 1.0.0
 ```
 
+#### Tip for NPM scripts
+
+With a combination of this module and NPM scripts, you can automatically add new releases to the change log.
+
+* First, install `changelog-cli` as a `devDependency`
+
+```
+$ npm install --save-dev git+https://fldubois@github.com/changelog-cli.git
+```
+
+* Then, add this `preversion` script to your `package.json`
+
+```js
+{
+  ...
+  "scripts": {
+    ...
+    "preversion": "chlg release $npm_package_version",
+    ...
+  },
+  ...
+}
+```
+
+Now, new releases will be added to the change log every time you use the `npm version` command.
+
 ## Programmatic usage
 
 * Install `changelog-cli` in your project
