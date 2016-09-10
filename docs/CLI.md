@@ -11,6 +11,8 @@
 * [fix](#fix)
 * [security](#security)
 
+---
+
 ### init
 
 > Create a new change log file with a standard template
@@ -28,6 +30,8 @@ $ chlg init [options]
 | `-f`  | `--file` | `CHANGELOG.md` | The change log filename |
 
 [▲ Back to top](#commands)
+
+---
 
 ### show
 
@@ -53,9 +57,17 @@ $ chlg show [options] <release>
 
 [▲ Back to top](#commands)
 
+---
+
 ### release
 
 > Set all current changes under a new version
+
+##### Usage
+
+```
+$ chlg release [options] <release>
+```
 
 ##### Options
 
@@ -65,6 +77,8 @@ $ chlg show [options] <release>
 | `-d`  | `--date` | Current date   | Set the release date    |
 
 [▲ Back to top](#commands)
+
+---
 
 ### insert
 
@@ -84,6 +98,8 @@ $ chlg insert [options] <section> <message>
 
 [▲ Back to top](#commands)
 
+---
+
 ### add
 
 > Add a new feature in current changes
@@ -101,6 +117,8 @@ $ chlg add [options] <message>
 | `-f`  | `--file` | `CHANGELOG.md` | The change log filename |
 
 [▲ Back to top](#commands)
+
+---
 
 ### change
 
@@ -120,6 +138,8 @@ $ chlg change [options] <message>
 
 [▲ Back to top](#commands)
 
+---
+
 ### deprecate
 
 > Tag a feature as deprecated for the upcoming release
@@ -137,6 +157,8 @@ $ chlg deprecate [options] <message>
 | `-f`  | `--file` | `CHANGELOG.md` | The change log filename |
 
 [▲ Back to top](#commands)
+
+---
 
 ### remove
 
@@ -156,6 +178,8 @@ $ chlg remove [options] <message>
 
 [▲ Back to top](#commands)
 
+---
+
 ### fix
 
 > Add a bug fix to changes list
@@ -173,6 +197,8 @@ $ chlg fix [options] <message>
 | `-f`  | `--file` | `CHANGELOG.md` | The change log filename |
 
 [▲ Back to top](#commands)
+
+---
 
 ### security
 

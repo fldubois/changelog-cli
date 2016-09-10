@@ -73,6 +73,7 @@ chlg.init(function (err) {
 ## Documentation
 
 * [CLI commands](docs/CLI.md)
+* [API functions](docs/API.md)
 
 ## License
 
