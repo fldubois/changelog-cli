@@ -1,5 +1,6 @@
 'use strict';
 
+var chalk  = require('chalk');
 var expect = require('chai').expect;
 
 var pretty = require('../../../lib/format/pretty');
@@ -13,37 +14,37 @@ describe('format/pretty', function () {
   });
 
   it('should format release line', function () {
-    expect(pretty.release('0.0.0', new Date('1970-01-01'))).to.equal('v0.0.0 - 1970-01-01');
-    expect(pretty.release('Unreleased', 'unreleased')).to.equal('Unreleased');
+    expect(pretty.release('0.0.0', new Date('1970-01-01'))).to.equal(chalk.bold('v0.0.0 - 1970-01-01'));
+    expect(pretty.release('Unreleased', 'unreleased')).to.equal(chalk.bold('Unreleased'));
   });
 
   it('should format section line', function () {
-    expect(pretty.section('Added')).to.equal('  Added:');
-    expect(pretty.section('Changed')).to.equal('  Changed:');
-    expect(pretty.section('Deprecated')).to.equal('  Deprecated:');
-    expect(pretty.section('Removed')).to.equal('  Removed:');
-    expect(pretty.section('Fixed')).to.equal('  Fixed:');
-    expect(pretty.section('Security')).to.equal('  Security:');
+    expect(pretty.section('Added')).to.equal(chalk.green('  Added:'));
+    expect(pretty.section('Changed')).to.equal(chalk.yellow('  Changed:'));
+    expect(pretty.section('Deprecated')).to.equal(chalk.gray('  Deprecated:'));
+    expect(pretty.section('Removed')).to.equal(chalk.red('  Removed:'));
+    expect(pretty.section('Fixed')).to.equal(chalk.cyan('  Fixed:'));
+    expect(pretty.section('Security')).to.equal(chalk.magenta('  Security:'));
   });
 
   it('should format message line', function () {
     pretty.section('Added');
-    expect(pretty.message('Hello, friend.')).to.equal('    - Hello, friend.');
+    expect(pretty.message('Hello, friend.')).to.equal(chalk.green('    - ') + 'Hello, friend.');
 
     pretty.section('Changed');
-    expect(pretty.message('Hello, friend.')).to.equal('    - Hello, friend.');
+    expect(pretty.message('Hello, friend.')).to.equal(chalk.yellow('    - ') + 'Hello, friend.');
 
     pretty.section('Deprecated');
-    expect(pretty.message('Hello, friend.')).to.equal('    - Hello, friend.');
+    expect(pretty.message('Hello, friend.')).to.equal(chalk.gray('    - ') + 'Hello, friend.');
 
     pretty.section('Removed');
-    expect(pretty.message('Hello, friend.')).to.equal('    - Hello, friend.');
+    expect(pretty.message('Hello, friend.')).to.equal(chalk.red('    - ') + 'Hello, friend.');
 
     pretty.section('Fixed');
-    expect(pretty.message('Hello, friend.')).to.equal('    - Hello, friend.');
+    expect(pretty.message('Hello, friend.')).to.equal(chalk.cyan('    - ') + 'Hello, friend.');
 
     pretty.section('Security');
-    expect(pretty.message('Hello, friend.')).to.equal('    - Hello, friend.');
+    expect(pretty.message('Hello, friend.')).to.equal(chalk.magenta('    - ') + 'Hello, friend.');
   });
 
 });

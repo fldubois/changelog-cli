@@ -64,7 +64,7 @@ describe('chlg-show', function () {
     chlgShow(function (error, logs) {
       expect(error).to.be.an('error');
       expect(error.code).to.equal('ENOENT');
-      expect(error.path).to.match(/(\/|\\)CHANGELOG.md$/);
+      expect(error.path).to.match(/(\/|\\)?CHANGELOG.md$/);
       expect(logs).to.be.an('undefined');
       done();
     });

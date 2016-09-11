@@ -137,7 +137,7 @@ describe('chlg-insert', function () {
     chlgInsert('Added', 'Message', {file: 'CHANGELOG-NOT-HERE.md'}, function (error) {
       expect(error).to.be.an('error');
       expect(error.code).to.equal('ENOENT');
-      expect(error.path).to.match(/(\/|\\)CHANGELOG-NOT-HERE.md$/);
+      expect(error.path).to.match(/(\/|\\)?CHANGELOG-NOT-HERE.md$/);
 
       return done();
     });
