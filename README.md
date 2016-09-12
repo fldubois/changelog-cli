@@ -1,5 +1,9 @@
 # changelog-cli
 
+[![Build Status](https://travis-ci.org/fldubois/changelog-cli.svg?branch=master)](https://travis-ci.org/fldubois/changelog-cli)
+[![dependencies Status](https://david-dm.org/fldubois/changelog-cli/status.svg)](https://david-dm.org/fldubois/changelog-cli)
+[![devDependencies Status](https://david-dm.org/fldubois/changelog-cli/dev-status.svg)](https://david-dm.org/fldubois/changelog-cli?type=dev)
+
 > Simple command line interface to edit CHANGELOG files according to [keepachangelog.com](http://keepachangelog.com/) rules.
 
 ## Command line usage
