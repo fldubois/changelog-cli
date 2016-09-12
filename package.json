@@ -21,7 +21,9 @@
   },
   "scripts": {
     "lint": "eslint lib test",
-    "test": "istanbul cover node_modules/mocha/bin/_mocha -- test/specs --recursive"
+    "test": "istanbul cover node_modules/mocha/bin/_mocha -- test/specs --recursive",
+    "coverage": "istanbul check-coverage --statements 100 --functions 100 --branches 100 --lines 100",
+    "preversion": "npm run lint && npm test && npm run coverage"
   },
   "dependencies": {
     "chalk": "^1.1.3",
