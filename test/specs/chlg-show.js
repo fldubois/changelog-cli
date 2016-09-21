@@ -218,6 +218,18 @@ describe('chlg-show', function () {
     });
   });
 
+  it('should return an error with no release selected', function (done) {
+    chlgShow({
+      file: fixtures.empty,
+      releases: []
+    }, function (error, logs) {
+      expect(error).to.be.an('error');
+      expect(error.message).to.equal('No release selected');
+      expect(logs).to.be.an('undefined');
+      done();
+    });
+  });
+
   it('should return an error with no matching release found', function (done) {
     chlgShow({
       file: fixtures.empty,

@@ -28,8 +28,8 @@ chalk.enabled = program.color;
 
 chlgShow({
   file:     program.file,
-  releases: program.release,
-  sections: program.section,
+  releases: (program.release.length > 0) ? program.release : null,
+  sections: (program.section.length > 0) ? program.section : null,
   from:     program.from,
   to:       program.to
 }, function (error, logs) {
