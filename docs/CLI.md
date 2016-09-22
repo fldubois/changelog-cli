@@ -45,15 +45,15 @@ $ chlg show [options] <release>
 
 ##### Options
 
-| Short | Long         | Default        | Description                     |
-| ----- | ------------ | -------------- | ------------------------------- |
-| `-f`  | `--file`     | `CHANGELOG.md` | The change log filename         |
-| `-r`  | `--release`  | `Unreleased`   | Release version to show         |
-| `-s`  | `--section`  | `all`          | Changes section to show         |
-| `-F`  | `--format`   | `raw`          | Ouput format                    |
-|       | `--from`     |                | Filter release before this date |
-|       | `--to`       |                | Filter release after this date  |
-| `-C`  | `--no-color` |                | Disable ouput colors            |
+| Short | Long         | Default        | Description                                            |
+| ----- | ------------ | -------------- | ------------------------------------------------------ |
+| `-f`  | `--file`     | `CHANGELOG.md` | The change log filename                                |
+| `-r`  | `--release`  | `Unreleased`   | Release version to show                                |
+| `-s`  | `--section`  | `all`          | Changes section to show                                |
+| `-F`  | `--format`   | `raw`          | Ouput format (see [formats documentation](formats.md)) |
+|       | `--from`     |                | Filter release before this date                        |
+|       | `--to`       |                | Filter release after this date                         |
+| `-C`  | `--no-color` |                | Disable ouput colors                                   |
 
 [▲ Back to top](#commands)
 
