@@ -94,17 +94,17 @@ describe('common/sections', function () {
       });
     });
 
-    it('should throw an error for not valid section names', function () {
-      expect(sections.after.bind(undefined, true)).to.throw('Invalid section name: true');
-      expect(sections.after.bind(undefined, false)).to.throw('Invalid section name: false');
-      expect(sections.after.bind(undefined, NaN)).to.throw('Invalid section name: NaN');
-      expect(sections.after.bind(undefined, 0)).to.throw('Invalid section name: 0');
-      expect(sections.after.bind(undefined, -1)).to.throw('Invalid section name: -1');
-      expect(sections.after.bind(undefined, null)).to.throw('Invalid section name: null');
-      expect(sections.after.bind(undefined, undefined)).to.throw('Invalid section name: undefined');
-      expect(sections.after.bind(undefined, '')).to.throw('Invalid section name: ');
-      expect(sections.after.bind(undefined, 'Hello')).to.throw('Invalid section name: Hello');
-      expect(sections.after.bind(undefined, 'ADDEDD')).to.throw('Invalid section name: ADDEDD');
+    it('should return null for not valid section names', function () {
+      expect(sections.after(true)).to.equal(null);
+      expect(sections.after(false)).to.equal(null);
+      expect(sections.after(NaN)).to.equal(null);
+      expect(sections.after(0)).to.equal(null);
+      expect(sections.after(-1)).to.equal(null);
+      expect(sections.after(null)).to.equal(null);
+      expect(sections.after(undefined)).to.equal(null);
+      expect(sections.after('')).to.equal(null);
+      expect(sections.after('Hello')).to.equal(null);
+      expect(sections.after('ADDEDD')).to.equal(null);
     });
 
   });

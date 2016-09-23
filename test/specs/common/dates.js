@@ -52,21 +52,19 @@ describe('common/dates', function () {
     });
 
     it('should throw an error for bad formatted string', function () {
-      var error = 'Date format must be YYYY-MM-DD';
-
-      expect(dates.parse.bind(undefined, true)).to.throw(error);
-      expect(dates.parse.bind(undefined, false)).to.throw(error);
-      expect(dates.parse.bind(undefined, NaN)).to.throw(error);
-      expect(dates.parse.bind(undefined, 0)).to.throw(error);
-      expect(dates.parse.bind(undefined, -1)).to.throw(error);
-      expect(dates.parse.bind(undefined, null)).to.throw(error);
-      expect(dates.parse.bind(undefined, undefined)).to.throw(error);
-      expect(dates.parse.bind(undefined, '')).to.throw(error);
-      expect(dates.parse.bind(undefined, 'Hello')).to.throw(error);
-      expect(dates.parse.bind(undefined, Date.now())).to.throw(error);
-      expect(dates.parse.bind(undefined, new Date('Invalid'))).to.throw(error);
-      expect(dates.parse.bind(undefined, new Date('1970-01-32'))).to.throw(error);
-      expect(dates.parse.bind(undefined, new Date())).to.throw(error);
+      expect(dates.parse(true)).to.equal(null);
+      expect(dates.parse(false)).to.equal(null);
+      expect(dates.parse(NaN)).to.equal(null);
+      expect(dates.parse(0)).to.equal(null);
+      expect(dates.parse(-1)).to.equal(null);
+      expect(dates.parse(null)).to.equal(null);
+      expect(dates.parse(undefined)).to.equal(null);
+      expect(dates.parse('')).to.equal(null);
+      expect(dates.parse('Hello')).to.equal(null);
+      expect(dates.parse(Date.now())).to.equal(null);
+      expect(dates.parse(new Date('Invalid'))).to.equal(null);
+      expect(dates.parse(new Date('1970-01-32'))).to.equal(null);
+      expect(dates.parse(new Date())).to.equal(null);
     });
 
     it('should return "Invalid Date" for incorrect date', function () {

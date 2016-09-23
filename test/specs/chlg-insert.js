@@ -127,7 +127,7 @@ describe('chlg-insert', function () {
   it('should return error on bad section name', function (done) {
     chlgInsert('Not a section', 'Message', function (error) {
       expect(error).to.be.an('error');
-      expect(error.message).to.equal('‘Not a section’ is not a valid change log section');
+      expect(error.message).to.equal('Invalid section name: Not a section');
 
       return done();
     });
