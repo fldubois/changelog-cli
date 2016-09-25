@@ -26,7 +26,9 @@
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "preversion": "npm run lint && npm test && npm run coverage",
     "version": "./bin/chlg-release $npm_package_version",
-    "postversion": "git push --follow-tags"
+    "postversion": "git push --follow-tags",
+    "precommit": "npm run lint",
+    "prepush": "npm run preversion"
   },
   "engines": {
     "node": ">=0.10"
@@ -43,6 +45,7 @@
     "chai": "^3.5.0",
     "coveralls": "^2.11.13",
     "eslint": "^2.13.1",
+    "husky": "^0.11.8",
     "istanbul": "^0.4.3",
     "mocha": "^3.0.2",
     "proxyquire": "^1.7.9",

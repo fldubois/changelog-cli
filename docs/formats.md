@@ -37,7 +37,7 @@
 - Add feature 5
 ```
 
-[▲ Back to top](#commands)
+[▲ Back to top](#formats)
 
 ---
 
@@ -71,7 +71,7 @@ v0.1.0 - 2016-09-22
     - Add feature 5
 ```
 
-[▲ Back to top](#commands)
+[▲ Back to top](#formats)
 
 ---
 
@@ -97,7 +97,7 @@ v0.1.0 - 2016-09-22
  + Add feature 5
 ```
 
-[▲ Back to top](#commands)
+[▲ Back to top](#formats)
 
 ---
 
@@ -153,4 +153,4 @@ v0.1.0 - 2016-09-22
 }
 ```
 
-[▲ Back to top](#commands)
+[▲ Back to top](#formats)
