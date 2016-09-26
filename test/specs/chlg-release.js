@@ -141,7 +141,7 @@ describe('chlg-release', function () {
     });
   });
 
-  it('should return an error for invalid date format', function (done) {
+  it('should return an error for invalid date value', function (done) {
     chlgRelease('1.0.0', {date: '1970-13-32'}, function (error) {
       expect(error).to.be.an('error');
       expect(error.message).to.equal('Invalid date: 1970-13-32');

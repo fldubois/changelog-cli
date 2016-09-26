@@ -266,6 +266,18 @@ describe('chlg-show', function () {
     });
   });
 
+  it('should return an error for invalid date on "from" parameter', function (done) {
+    chlgShow({
+      file: fixtures.valid,
+      from: '1970-01-32'
+    }, function (error, logs) {
+      expect(error).to.be.an('error');
+      expect(error.message).to.equal('Invalid date: 1970-01-32');
+      expect(logs).to.be.an('undefined');
+      done();
+    });
+  });
+
   it('should return an error for bad format on "to" parameter', function (done) {
     chlgShow({
       file: fixtures.valid,
@@ -273,6 +285,18 @@ describe('chlg-show', function () {
     }, function (error, logs) {
       expect(error).to.be.an('error');
       expect(error.message).to.equal('Date format must be YYYY-MM-DD');
+      expect(logs).to.be.an('undefined');
+      done();
+    });
+  });
+
+  it('should return an error for invalid date on "to" parameter', function (done) {
+    chlgShow({
+      file: fixtures.valid,
+      to:   '1970-01-32'
+    }, function (error, logs) {
+      expect(error).to.be.an('error');
+      expect(error.message).to.equal('Invalid date: 1970-01-32');
       expect(logs).to.be.an('undefined');
       done();
     });
