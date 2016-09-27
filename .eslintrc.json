@@ -217,7 +217,7 @@
     // disallow specified global variables
     "no-restricted-globals": "off",
     // disallow var declarations from shadowing variables in the outer scope
-    "no-shadow": "error",
+    "no-shadow": ["error", {"allow": ["error"]}],
     // disallow identifiers from shadowing restricted names
     "no-shadow-restricted-names": "error",
     // disallow the use of undeclared variables unless mentioned in /*global */ comments
