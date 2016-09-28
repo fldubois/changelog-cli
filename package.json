@@ -1,5 +1,5 @@
 {
-  "name": "changelog-cli",
+  "name": "chlg-cli",
   "version": "0.0.0",
   "description": "Simple command line interface to edit CHANGELOG files according to keepachangelog.com rules",
   "author": "Florent Dubois <florent.dubois@devaddict.io>",
@@ -8,11 +8,11 @@
     "changelog",
     "cli"
   ],
-  "homepage": "https://github.com/fldubois/changelog-cli#readme",
-  "bugs": "https://github.com/fldubois/changelog-cli/issues",
+  "homepage": "https://github.com/fldubois/chlg-cli#readme",
+  "bugs": "https://github.com/fldubois/chlg-cli/issues",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fldubois/changelog-cli.git"
+    "url": "git+https://github.com/fldubois/chlg-cli.git"
   },
   "main": "lib/chlg.js",
   "directories": {
