@@ -1,6 +1,8 @@
 # chlg-cli
 
+[![npm](https://img.shields.io/npm/v/chlg-cli.svg?maxAge=3600)](https://www.npmjs.com/package/chlg-cli)
 [![Build Status](https://travis-ci.org/fldubois/chlg-cli.svg?branch=master)](https://travis-ci.org/fldubois/chlg-cli)
+[![Coverage Status](https://coveralls.io/repos/github/fldubois/chlg-cli/badge.svg?branch=master)](https://coveralls.io/github/fldubois/chlg-cli?branch=master)
 [![dependencies Status](https://david-dm.org/fldubois/chlg-cli/status.svg)](https://david-dm.org/fldubois/chlg-cli)
 [![devDependencies Status](https://david-dm.org/fldubois/chlg-cli/dev-status.svg)](https://david-dm.org/fldubois/chlg-cli?type=dev)
 
