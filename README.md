@@ -36,14 +36,14 @@ With a combination of this module and NPM scripts, you can automatically add new
 $ npm install --save-dev chlg-cli
 ```
 
-* Then, add this `preversion` script to your `package.json`
+* Then, add this `version` script to your `package.json`
 
 ```js
 {
   ...
   "scripts": {
     ...
-    "preversion": "chlg release $npm_package_version",
+    "version": "chlg release $npm_package_version && git add CHANGELOG.md",
     ...
   },
   ...
