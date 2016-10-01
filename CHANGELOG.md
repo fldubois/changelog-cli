@@ -4,6 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.0.0] - 2016-10-01
+
 ### Added
 - Command and function `init`
 - Command and function `show`
