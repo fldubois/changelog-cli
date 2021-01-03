@@ -20,15 +20,16 @@
     "bin": "./bin"
   },
   "scripts": {
-    "lint": "eslint lib test",
-    "test": "istanbul cover node_modules/mocha/bin/_mocha -- test/specs --recursive",
-    "coverage": "istanbul check-coverage --statements 100 --functions 100 --branches 100 --lines 100",
+    "test": "npm run test:lint && npm run test:unit && npm run test:coverage",
+    "test:lint": "eslint lib test",
+    "test:unit": "istanbul cover node_modules/mocha/bin/_mocha -- test/specs --recursive",
+    "test:coverage": "istanbul check-coverage --statements 100 --functions 100 --branches 100 --lines 100",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
-    "preversion": "npm run lint && npm test && npm run coverage",
+    "preversion": "npm run test",
     "version": "./bin/chlg-release $npm_package_version && git add CHANGELOG.md",
-    "postversion": "git push --follow-tags",
-    "precommit": "npm run lint",
-    "prepush": "npm run preversion"
+    "postversion": "git push --follow-tags --no-verify",
+    "precommit": "npm run test:lint",
+    "prepush": "npm run test"
   },
   "engines": {
     "node": ">=0.10"
