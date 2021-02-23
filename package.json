@@ -19,6 +19,11 @@
     "lib": "./lib",
     "bin": "./bin"
   },
+  "files": [
+    "bin",
+    "docs",
+    "lib"
+  ],
   "scripts": {
     "test": "npm run test:lint && npm run test:unit && npm run test:coverage",
     "test:lint": "eslint lib test",
